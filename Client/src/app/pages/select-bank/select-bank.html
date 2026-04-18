@@ -1,0 +1,49 @@
+<div class="auth-container">
+  <div class="auth-card bank-selection">
+    <header class="auth-header">
+      <div class="stepper">
+        <span class="step"></span>
+        <span class="step active"></span>
+        <span class="step"></span>
+      </div>
+    </header>
+
+    <h1>Link your bank</h1>
+    <p class="subtitle">Choose the banks you use. You can add multiple.</p>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search for a bank...">
+    </div>
+
+    <div class="banks-grid">
+      <div class="bank-item" [class.selected]="selectedBank === 'revolut'" (click)="select('revolut')">
+        <div class="bank-icon revolut"></div>
+        <span class="bank-name">Revolut</span>
+        <span class="bank-desc">Card / Account</span>
+        <div class="check-icon" *ngIf="selectedBank === 'revolut'">✓</div>
+      </div>
+
+      <div class="bank-item" [class.selected]="selectedBank === 'tatra'" (click)="select('tatra')">
+        <div class="bank-icon tatra"></div>
+        <span class="bank-name">Tatra Banka</span>
+        <span class="bank-desc">Card / Account</span>
+        <div class="check-icon" *ngIf="selectedBank === 'tatra'">✓</div>
+      </div>
+
+      <div class="bank-item" [class.selected]="selectedBank === 'klarna'" (click)="select('klarna')">
+        <div class="bank-icon klarna"></div>
+        <span class="bank-name">Klarna</span>
+        <span class="bank-desc">Card / Account</span>
+        <div class="check-icon" *ngIf="selectedBank === 'klarna'">✓</div>
+      </div>
+    </div>
+
+    <p class="selection-count">Selected: <b>{{selectedBank ? 1 : 0}}</b> bank</p>
+
+    <button class="submit-btn" [disabled]="!selectedBank" (click)="onContinue()">
+      Continue 
+    </button>
+    
+    <p class="skip-text" (click)="onSkip()">Skip, I'll add it later</p>
+  </div>
+</div>

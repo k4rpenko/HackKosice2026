@@ -1,0 +1,198 @@
+.auth-container {
+  min-height: 100vh;
+  background: #0a0a0a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Inter', sans-serif;
+  color: white;
+
+  .auth-card {
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 28px;
+    padding: 40px;
+    width: 100%;
+    max-width: 550px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .auth-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+
+    .stepper {
+      display: flex;
+      gap: 10px;
+      .step {
+        width: 35px;
+        height: 5px;
+        background: #222;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        &.active {
+          background: #2ecc71;
+          width: 50px;
+          box-shadow: 0 0 15px rgba(46, 204, 113, 0.4);
+        }
+      }
+    }
+  }
+
+  h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .subtitle {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 35px;
+    line-height: 1.5;
+  }
+
+  .search-bar {
+    margin-bottom: 35px;
+    input {
+      width: 100%;
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      padding: 16px 20px;
+      border-radius: 16px;
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: none;
+        border-color: #2ecc71;
+        background: #1a1a1a;
+        box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.1);
+      }
+    }
+  }
+
+  .banks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .bank-item {
+    background: #161616;
+    border: 1px solid #2a2a2a;
+    padding: 30px 10px;
+    border-radius: 22px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &:hover {
+      transform: translateY(-5px);
+      border-color: #444;
+      background: #1c1c1c;
+    }
+
+    &.selected {
+      border-color: #2ecc71;
+      background: rgba(46, 204, 113, 0.08);
+      transform: scale(1.02);
+    }
+
+    .bank-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.revolut {
+        background: white;
+        &::after { content: 'R'; color: black; font-weight: 900; font-size: 24px; }
+      }
+
+      &.tatra {
+        background: #000;
+        border: 1px solid #333;
+        &::after { content: 'TB'; color: #fff; font-weight: bold; font-size: 18px; }
+      }
+
+      &.klarna {
+        background: #ffb3c7;
+        &::after { content: 'K.'; color: black; font-weight: 900; font-size: 22px; }
+      }
+    }
+
+    .bank-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 6px; }
+    .bank-desc { color: #555; font-size: 0.75rem; }
+
+    .check-icon {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #2ecc71;
+      color: black;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      animation: scaleIn 0.2s ease;
+    }
+  }
+
+  .selection-count {
+    color: #888;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    b { color: #2ecc71; }
+  }
+
+  .submit-btn {
+    width: 100%;
+    background: white;
+    color: black;
+    border: none;
+    padding: 18px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:disabled {
+      background: #222;
+      color: #555;
+      cursor: not-allowed;
+    }
+  }
+
+  .skip-text {
+    margin-top: 25px;
+    color: #444;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: underline;
+    &:hover { color: #888; }
+  }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
