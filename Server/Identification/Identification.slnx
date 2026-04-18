@@ -1,3 +1,9 @@
 <Solution>
-  <Project Path="Identification/Identification.csproj" />
+  <Folder Name="/components/">
+    <Project Path="PGAdminDAL/PGAdminDAL.csproj" />
+    <Project Path="Redis/Redis.csproj" />
+  </Folder>
+  <Folder Name="/REST/">
+    <Project Path="Identification/Identification.csproj" />
+  </Folder>
 </Solution>

@@ -10,7 +10,8 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "skipTests": true
         }
       },
       "root": "",
@@ -19,6 +20,14 @@
       "architect": {
         "build": {
           "builder": "@angular/build:application",
+          // "options": {
+          //   "ssl": true,
+          //   "sslKey": "certs/localhost.key",
+          //   "sslCert": "certs/localhost.crt",
+          //   "host": "0.0.0.0",
+          //   "port": 4200,
+          //   "proxyConfig": "proxy.conf.json"
+          // },
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
