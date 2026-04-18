@@ -1,0 +1,5 @@
+/Client/.vscode
+/Server/Identification/.vs
+/Server/Identification/Identification/obj
+/Server/Identification/Redis/obj
+/Server/Identification/PGAdminDAL/obj
