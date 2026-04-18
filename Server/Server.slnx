@@ -1,12 +1,15 @@
 <Solution>
   <Folder Name="/Components/">
+    <Project Path="Hash/Hash.csproj" Id="b3870167-5952-4029-a07b-240c919709c8" />
     <Project Path="Logger/Logger.csproj" />
     <Project Path="PGAdminDAL/PGAdminDAL.csproj" />
     <Project Path="Redis/Redis.csproj" />
+    <Project Path="SessionService/PostgresService.csproj" Id="bc76a8a3-3f97-4ec2-a2b8-cbd7128ce1ce" />
   </Folder>
-  <Folder Name="/Components/Hash/" />
   <Folder Name="/Rest/">
+    <Project Path="FinanceService/FinanceService.csproj" Id="340b9cc1-8fdd-491c-8074-c4713fcbf05d" />
     <Project Path="Identification/Identification.csproj" />
+    <Project Path="Services/Services.csproj" Id="832d3f83-ceb3-4fe4-9217-f1a2c946511a" />
   </Folder>
   <Folder Name="/Tests/" />
   <Project Path="docker-compose.dcproj">

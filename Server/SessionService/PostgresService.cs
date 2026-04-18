@@ -1,26 +1,20 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PGAdminDAL;
-using PGAdminDAL.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SessionService
+namespace PostgresService
 {
-    public class SessionServiceImpl : ISessionService
+    public class PostgresServiceImpl : IPostgresService
     {
         public readonly AppDbContext _context;
-        public SessionServiceImpl(AppDbContext context)
+        public PostgresServiceImpl(AppDbContext context)
         {
             _context = context;
         }
 
-        public async Task<string> GetUserIdAsync(HttpRequest req)
+        public async Task<Guid> GetUserIdAsync(HttpRequest req)
         {
-            if (!req.Cookies.TryGetValue("_ASA", out string cookieValue)) return null;
+            if (!req.Cookies.TryGetValue("_ASA", out string cookieValue)) return Guid.Empty;
 
             var session = await _context.Sessions.FirstOrDefaultAsync(u => u.KeyHash == cookieValue);
 
@@ -31,7 +25,7 @@ namespace SessionService
                     _context.Sessions.Remove(session);
                     await _context.SaveChangesAsync();
                 }
-                return null;
+                return Guid.Empty;
             }
 
             return session.UserId;
@@ -57,11 +51,16 @@ namespace SessionService
 
         public async Task<UserModel> GetUserDataByIdAsync(string userId, HttpRequest req)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (!Guid.TryParse(userId, out var guid)) return null;
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == guid);
 
             if (user == null) return null;
             
             return user;
         }
+
+
+
     }
 }

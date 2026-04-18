@@ -15,13 +15,14 @@ namespace PGAdminDAL.Models
 
         public Guid UserId { get; set; }
         public UserModel User { get; set; }
+
         public string Name { get; set; }
 
         public decimal TargetAmount { get; set; }
 
-        public decimal CurrentAmount { get; set; }
-
         public decimal Balance { get; set; }
+
+        public bool IsCompleted { get; set; } = false;
 
         public ICollection<JarAccess> AccessList { get; set; }
     

@@ -17,3 +17,10 @@
 /Server/PGAdminDAL/bin
 /Server/Redis/bin
 /Server/SessionService/obj
+/Server/FinanceService/bin
+/Server/FinanceService/obj
+/Server/Hash/bin
+/Server/Services/bin
+/Server/Services/obj/Debug
+/Server/SessionService/bin
+/Server/Services/obj

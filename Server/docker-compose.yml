@@ -4,3 +4,17 @@ services:
     build:
       context: .
       dockerfile: Identification/Dockerfile
+
+  financeservice:
+    image: ${DOCKER_REGISTRY-}financeservice
+    build:
+      context: .
+      dockerfile: FinanceService/Dockerfile
+
+
+  services:
+    image: ${DOCKER_REGISTRY-}services
+    build:
+      context: .
+      dockerfile: Services/Dockerfile
+

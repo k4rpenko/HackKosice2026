@@ -7,20 +7,15 @@ namespace PGAdminDAL
 {
     public class AppDbContext : DbContext
     {
-        private readonly IConfiguration _configuration;
-
-        public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
-            _configuration = configuration;
         }
-
-        public AppDbContext GetDbContext() => (AppDbContext)_configuration;
-
 
         // ================= USERS =================
         public DbSet<UserModel> Users { get; set; }
         public DbSet<Sessions> Sessions { get; set; }
+        public DbSet<UserLoginService> UserLogins { get; set; }
 
         // ================= BANKING =================
         public DbSet<BankModel> Banks { get; set; }
@@ -46,10 +41,12 @@ namespace PGAdminDAL
             modelBuilder.HasDefaultSchema("HackKosice");
 
             // ================= USER RELATIONS =================
+
+            // Зв'язок 1-до-1 між User та Bank (згідно з UserModel.cs)
             modelBuilder.Entity<UserModel>()
-                .HasMany(u => u.Banks)
+                .HasOne(u => u.Bank)
                 .WithOne(b => b.User)
-                .HasForeignKey(b => b.UserId)
+                .HasForeignKey<BankModel>(b => b.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<UserModel>()
@@ -63,6 +60,10 @@ namespace PGAdminDAL
                 .WithOne(s => s.User)
                 .HasForeignKey(s => s.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Налаштування ключа для UserLoginService
+            modelBuilder.Entity<UserLoginService>()
+                .HasKey(l => new { l.LoginProvider, l.ProviderKey });
 
             // ================= BANK -> BANK INFO =================
             modelBuilder.Entity<BankModel>()
@@ -117,19 +118,30 @@ namespace PGAdminDAL
                 .HasForeignKey(ja => ja.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ================= OPTIONAL CONFIG =================
+            // ================= DATA PRECISION CONFIG =================
+
+            modelBuilder.Entity<Card>()
+                .Property(c => c.Amount).HasPrecision(18, 2);
+
+            modelBuilder.Entity<Transaction>()
+                .Property(t => t.Amount).HasPrecision(18, 2);
+
+            modelBuilder.Entity<Jar>()
+                .Property(j => j.Balance).HasPrecision(18, 2);
+            modelBuilder.Entity<Jar>()
+                .Property(j => j.TargetAmount).HasPrecision(18, 2);
+
+            modelBuilder.Entity<JarAccess>()
+                .Property(ja => ja.AmountMusted).HasPrecision(18, 2);
+
+            modelBuilder.Entity<Service>()
+                .Property(s => s.AverageAmount).HasPrecision(18, 2);
+
+            // ================= CONSTRAINTS =================
 
             modelBuilder.Entity<Card>()
                 .Property(c => c.CardNumber)
                 .HasMaxLength(32);
-
-            modelBuilder.Entity<Transaction>()
-                .Property(t => t.Amount)
-                .HasPrecision(18, 2);
-
-            modelBuilder.Entity<Jar>()
-                .Property(j => j.Balance)
-                .HasPrecision(18, 2);
         }
     }
 }

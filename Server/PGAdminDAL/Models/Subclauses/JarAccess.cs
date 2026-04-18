@@ -18,6 +18,9 @@ namespace PGAdminDAL.Models.Subclauses
         public bool CanDeposit { get; set; } = true;
         public bool CanWithdraw { get; set; } = false;
 
+        public bool IsMust { get; set; } = false;
+        public decimal AmountMusted { get; set; } = 0;
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

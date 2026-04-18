@@ -8,11 +8,10 @@ namespace PGAdminDAL.Models.Subclauses
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public string UserId { get; set; }
-
         public Guid BankModelId { get; set; }
         public BankModel Bank { get; set; }
 
+        public decimal Amount { get; set; }
         public string CardNumber { get; set; }
         public string CardHolderName { get; set; }
         public string ExpiryDate { get; set; }

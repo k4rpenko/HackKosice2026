@@ -26,6 +26,9 @@ namespace PGAdminDAL.Models.Subclauses
         public Guid? CardId { get; set; }
         public Card? Card { get; set; }
 
+        public Guid? ToCardId { get; set; }
+        public Card? ToCard { get; set; }
+
         public Guid? JarId { get; set; }
         public Jar? Jar { get; set; }
 
