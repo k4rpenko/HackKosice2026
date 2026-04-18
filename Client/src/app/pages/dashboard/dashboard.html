@@ -1,0 +1,123 @@
+
+<main class="app-page-shell">
+    <app-header />
+    <div class="dashboard-container">
+        <div class="main-content">
+            <header class="main-header">
+                    <h1>Hi, <span class="highlight">{{ userName }}!</span></h1>
+                    <div class="header-actions">
+                        <div class="action-btn theme-toggle" (click)="toggleTheme()">
+                            <span *ngIf="isDarkMode">☀️</span>
+                            <span *ngIf="!isDarkMode">🌙</span>
+                        </div>
+                        <div class="user-avatar" (click)="navigateTo('profile')">JD</div>
+                    </div>
+        </header>
+
+    <section class="stats-overview">
+        <div class="stat-box main">
+            <span class="label">Total Balance</span>
+            <div class="value">€{{ totalBalance | number }}</div>
+            <span class="trend">↑ +€2,100 this week</span>
+        </div>
+        <div class="stat-box" (click)="navigateTo('friends')">
+            <span class="label">Shared Account</span>
+            <div class="value">€3,200</div>
+            <span class="sub">4 members</span>
+        </div>
+        <div class="stat-box">
+            <span class="label">Owes you</span>
+            <div class="value">€850</div>
+            <span class="sub green">3 people</span>
+        </div>
+        <div class="stat-box">
+            <span class="label">You owe</span>
+            <div class="value">€340</div>
+            <span class="sub red">↑ to Anna K.</span>
+        </div>
+    </section>
+
+    <section class="quick-actions">
+        <button class="action-card" (click)="navigateTo('transfer')">
+            <i class="icon-send"></i> Transfer
+        </button>
+        <button class="action-card" (click)="addExpense()">
+            <i class="icon-plus"></i> Add Expense
+        </button>
+        <button class="action-card" (click)="navigateTo('friends')">
+            <i class="icon-split"></i> Split
+        </button>
+        <button class="action-card" (click)="showAIReport()">
+            <i class="icon-ai"></i> AI Report
+        </button>
+    </section>
+
+    <section class="transactions">
+        <h3>Recent Transactions</h3>
+        <div class="transaction-list">
+            <div class="t-item" *ngFor="let t of transactions">
+                <div class="t-icon">{{ t.icon }}</div>
+                <div class="t-info">
+                    <span class="t-name">{{ t.name }}</span>
+                    <span class="t-meta">{{ t.meta }}</span>
+                </div>
+                <span class="t-amount" [ngClass]="t.type">
+                    {{ t.amount > 0 ? '+' : '' }}€{{ t.amount | number }}
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <section class="bill-split-preview">
+        <div class="split-card">
+            <div class="split-header">
+                <span>✂️ Bill Splitting: Domino's <b>€620</b></span>
+            </div>
+            <div class="split-members">
+                <div class="member">
+                    <div class="m-avatar">JD</div>
+                    <div class="m-info"><b>You (John)</b><span>Revolut</span></div>
+                    <div class="m-val">€155</div>
+                </div>
+                <div class="member">
+                    <div class="m-avatar">MP</div>
+                    <div class="m-info"><b>Maria Petrova</b><span>N26</span></div>
+                    <div class="m-val">€155</div>
+                </div>
+            </div>
+            <button class="send-requests-btn" (click)="sendPaymentRequests()">
+                Send payment requests to all —>
+            </button>
+        </div>
+    </section>
+        </div>
+
+        <aside class="right-panel">
+            <div class="ai-insight">
+                <div class="ai-header">● AI Analytics</div>
+                <p>This month you spent 23% more on food than usual.</p>
+                <div class="ai-tip">💡 Avg. group spend: €412/week. Maria transfers fastest — 2h.</div>
+                <div class="ai-tip">📊 Debts: 3 people should return €850 by the end of the week.</div>
+            </div>
+
+            <div class="groups-section">
+                <h3>Groups</h3>
+                <div class="group-item" (click)="navigateTo('friends')">
+                    <div class="g-info">
+                        <b>Family</b> <span>Active</span>
+                        <p>Shared account · 4 people</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="debts-section">
+                <h3>Debts (to you)</h3>
+                <div class="debt-item" *ngFor="let d of debts">
+                    <div class="d-info"><b>{{ d.name }}</b><span>{{ d.reason }}</span></div>
+                    <div class="d-amount">€{{ d.amount }}</div>
+                    <button class="remind-btn" (click)="remindUser(d.name)">Remind</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+</main>

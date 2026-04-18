@@ -1,0 +1,116 @@
+<div class="jar-root">
+  <section class="jars-section" *ngIf="jars.length > 0">
+    <h2 class="jars-section__title">Jars</h2>
+    <p class="jars-section__sub">Shared collections</p>
+    <div class="jars-grid">
+      <article class="jar-card" *ngFor="let j of jars">
+        <div class="jar-card__head">
+          <span class="jar-card__title">{{ j.title }}</span>
+          <button type="button" class="jar-card__remove" (click)="deleteJar(j.id, $event)" aria-label="Delete">×</button>
+        </div>
+        <div class="jar-card__amount">€{{ j.totalAmount | number: '1.2-2' }}</div>
+        <ul class="jar-card__members">
+          <li *ngFor="let m of j.members">
+            <span>{{ m.name }}</span>
+            <span class="jar-card__pay">€{{ m.payAmount | number: '1.2-2' }}</span>
+          </li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <div class="jar-backdrop" *ngIf="showJarModal" (click)="closeJarModal()">
+    <div class="jar-modal" (click)="$event.stopPropagation()">
+      <button type="button" class="jar-modal__close" (click)="closeJarModal()" aria-label="Close">×</button>
+
+      <header class="jar-modal__header">
+        <div class="jar-stepper" role="group" aria-label="Steps">
+          <span class="jar-step" [class.jar-step--active]="jarStep === 1" [class.jar-step--done]="jarStep > 1"></span>
+          <span class="jar-step" [class.jar-step--active]="jarStep === 2" [class.jar-step--done]="jarStep > 2"></span>
+          <span class="jar-step" [class.jar-step--active]="jarStep === 3"></span>
+        </div>
+        <p class="jar-modal__eyebrow">New Jar</p>
+        <h2 class="jar-modal__title">Jar</h2>
+        <p class="jar-modal__subtitle">Step {{ jarStep }} of 3</p>
+      </header>
+
+      <div class="jar-step-body" *ngIf="jarStep === 1">
+        <label class="jar-field-label" for="jar-title">Jar Title</label>
+        <input
+          id="jar-title"
+          class="jar-input"
+          type="text"
+          [(ngModel)]="jarTitle"
+          placeholder="For example: Pizza for the weekend"
+          maxlength="80"
+        />
+      </div>
+
+      <div class="jar-step-body" *ngIf="jarStep === 2">
+        <label class="jar-field-label" for="jar-total">Total Amount (€)</label>
+        <input
+          id="jar-total"
+          class="jar-input"
+          type="number"
+          [(ngModel)]="jarTotal"
+          placeholder="0"
+          min="0"
+          step="0.01"
+        />
+      </div>
+
+      <div class="jar-step-body jar-step-body--people" *ngIf="jarStep === 3">
+        <p class="jar-people-hint">
+          You can choose no one — then this will be a <strong>personal jar</strong> just for you (you'll see the full amount as "Just Me").
+          If you add people — it will work like a shared jar: tiles from the circle. You can leave the amount unspecified — the remainder will be split equally among those without specified amounts.
+        </p>
+        <div class="jar-banks-grid">
+          <button
+            type="button"
+            class="jar-person-tile"
+            *ngFor="let p of circlePeople"
+            [class.jar-person-tile--selected]="isPersonInJar(p.id)"
+          >
+            <div class="jar-person-tile__avatar">{{ p.initials }}</div>
+            <span class="jar-person-tile__name">{{ p.name }}</span>
+            <span class="jar-person-tile__role">{{ p.role }}</span>
+            <span class="jar-person-tile__check" *ngIf="isPersonInJar(p.id)">✓</span>
+          </button>
+        </div>
+
+        <div class="jar-amounts" *ngIf="jarParticipants.length > 0">
+          <h3 class="jar-amounts__title">Суми до сплати</h3>
+          <div class="jar-amount-row" *ngFor="let row of jarParticipants">
+            <span class="jar-amount-row__name">{{ row.name }}</span>
+            <input
+              class="jar-input jar-input--sm"
+              type="number"
+              min="0"
+              step="0.01"
+              placeholder="Авто"
+            />
+          </div>
+        </div>
+        <p class="jar-personal-note" *ngIf="jarParticipants.length === 0">
+          No one selected — after creation, the jar will be personal (without splitting among others).
+        </p>
+      </div>
+
+      <footer class="jar-modal__footer">
+        <button type="button" class="jar-btn jar-btn--ghost" (click)="closeJarModal()">Cancel</button>
+        <button
+          type="button"
+          class="jar-btn jar-btn--primary"
+          *ngIf="jarStep < 3"
+          (click)="nextJarStep()"
+          [disabled]="(jarStep === 1 && !jarTitle.trim()) || (jarStep === 2 && (jarTotal === null || jarTotal === undefined || jarTotal <= 0))"
+        >
+          Next
+        </button>
+        <button type="button" class="jar-btn jar-btn--primary" *ngIf="jarStep === 3" >
+          Create Jar
+        </button>
+      </footer>
+    </div>
+  </div>
+</div>
