@@ -1,0 +1,166 @@
+﻿using Hash.Interface;
+using Identification.Models.Users;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PGAdminDAL;
+using PGAdminDAL.Models;
+using System.Text.RegularExpressions;
+
+namespace Identification.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class Auth : Controller
+    {
+        private readonly IHASH256 _hash;
+        private readonly IArgon2Hasher _hasher;
+        private readonly AppDbContext _context;
+
+        public Auth(AppDbContext context, IArgon2Hasher hasher,  IHASH256 hash)
+        {
+            _context = context;
+            _hasher = hasher;
+            _hash = hash;
+        }
+
+
+        [HttpPost("registration")]
+        public async Task<IActionResult> CreateUser(UserAuth _user)
+        {
+            string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            if (string.IsNullOrWhiteSpace(_user.Email) || string.IsNullOrWhiteSpace(_user.Password) || !Regex.IsMatch(_user.Email, emailPattern)) { return BadRequest(new { message = "Email and Password cannot be null or empty" }); }
+            try
+            {
+                
+                var user = _context.Users.FirstOrDefault(u => u.Email == _user.Email);
+                if (user == null)
+                {
+
+                    var KeyG = BitConverter.ToString(_hash.GenerateKey()).Replace("-", "").ToLower();
+                    int nextUserNumber = await _context.Users.CountAsync() + 1;
+                    var newUser = new UserModel
+                    {
+                        Email = _user.Email,
+                        KeyHash = KeyG,
+                        Password = _hash.Encrypt(_user.Password, KeyG),
+                        FirstName = "User",
+                        LastName = "",
+                        Avatar = "https://54hmmo3zqtgtsusj.public.blob.vercel-storage.com/avatar/Logo-yEeh50niFEmvdLeI2KrIUGzMc6VuWd-a48mfVnSsnjXMEaIOnYOTWIBFOJiB2.jpg",
+                    };  
+
+                    _context.Users.Add(newUser);
+
+
+                    await _context.SaveChangesAsync();
+                   
+                    var userId = newUser.Id.ToString();
+                    var record = await _context.Users.FindAsync(userId);
+
+                    if (record != null)
+                    {
+
+                        //await _emailSend.PasswordCheckEmailAsync(_user.Email, _jwt.GenerateJwtToken(userId, KeyG, 1), Request.Scheme, Request.Host.ToString());
+
+                        string token;
+                        string key;
+                        bool isUnique = false;
+                        do
+                        {
+                            key = _hasher.GenerateKey();
+                            token = _hasher.GenerateHash(userId, key);
+
+                            var find = await _context.Users
+                                .Where(u => u.Sessions.Any(s => s.KeyHash == token))
+                                .FirstOrDefaultAsync();
+
+                            isUnique = (find == null);
+
+                        } while (!isUnique);
+
+                        var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+                        string safeIpAddress = string.IsNullOrEmpty(ipAddress) ? "Невідома IP" : ipAddress;
+
+                        string deviceInfo = HttpContext.Request.Headers["User-Agent"].ToString() ?? "Невідомий пристрій";
+
+                        var SessionsData = new Sessions
+                        {
+                            UserId = record.Id,
+                            DeviceInfo = deviceInfo,
+                            IPAddress = safeIpAddress,
+                            KeyHash = token,
+                            Salt = key,
+                            LoginTime = DateTime.UtcNow.AddDays(14)
+                        };
+
+                        record.Sessions.Add(SessionsData);
+
+
+                        await _context.SaveChangesAsync();
+                        return Ok(new { cookie = token });
+                    }
+                    return BadRequest(new { message = "Please try again later." });
+                }
+                else
+                {
+                    return Conflict(new { message = "A user with this email already exists." });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("", ex);
+            }
+        }
+
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginUser(UserAuth _user)
+        {
+            string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            if (string.IsNullOrWhiteSpace(_user.Email) || string.IsNullOrWhiteSpace(_user.Password) || !Regex.IsMatch(_user.Email, emailPattern)) { return BadRequest(new { message = "Email and Password cannot be null or empty" }); }
+            if (_user.Password.Contains(" ")) { return BadRequest(new { message = "Password cannot contain spaces" }); }
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == _user.Email);
+            if (user == null) { return NotFound(new { message = "User not found." }); }
+
+            var encryptedPassword = _hash.Encrypt(_user.Password, user.KeyHash);
+            if (user.Password != encryptedPassword) { return Unauthorized(new { message = "Invalid credentials." }); }
+
+            string token;
+            string key;
+            bool isUnique = false;
+            do
+            {
+                key = _hasher.GenerateKey();
+                token = _hasher.GenerateHash(user.Id.ToString(), key);
+
+                var find = await _context.Users
+                    .Where(u => u.Sessions.Any(s => s.KeyHash == token))
+                    .FirstOrDefaultAsync();
+
+                isUnique = (find == null);
+
+            } while (!isUnique);
+
+            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+            string safeIpAddress = string.IsNullOrEmpty(ipAddress) ? "Невідома IP" : ipAddress;
+
+            string deviceInfo = HttpContext.Request.Headers["User-Agent"].ToString() ?? "Невідомий пристрій";
+
+            var SessionsData = new Sessions
+            {
+                UserId = user.Id,
+                DeviceInfo = deviceInfo,
+                IPAddress = safeIpAddress,
+                KeyHash = token,
+                Salt = key,
+                LoginTime = DateTime.UtcNow.AddDays(1)
+            };
+
+
+            user.Sessions.Add(SessionsData);
+
+            await _context.SaveChangesAsync();
+            return Ok(new { cookie = token });
+        }
+    }
+}

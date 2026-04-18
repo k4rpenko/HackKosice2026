@@ -9,4 +9,7 @@
     <Project Path="Identification/Identification.csproj" />
   </Folder>
   <Folder Name="/Tests/" />
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
 </Solution>

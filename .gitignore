@@ -9,3 +9,11 @@
 /Server/PGAdminDAL/obj
 /Server/Redis/obj
 /Server/Server/obj
+/Server/bin
+/Server/Hash/obj
+/Server/Identification/bin
+/Server/obj
+/Server/Logger/bin
+/Server/PGAdminDAL/bin
+/Server/Redis/bin
+/Server/SessionService/obj
