@@ -1,0 +1,101 @@
+<main class="app-page-shell">
+  <app-header />
+  <div class="app-page-shell__body card-details-page">
+    <header class="details-header">
+      <a class="back-btn" routerLink="/cards">← Back to cards</a>
+      <div class="details-header__titles">
+        <p class="details-eyebrow">Card statistics</p>
+        <h1 class="details-title"><span class="highlight">Insights</span> & activity</h1>
+      </div>
+    </header>
+
+    <div class="details-layout" *ngIf="cardData">
+      <aside class="details-aside">
+        <div class="plastic-card" [class.plastic-card--active]="cardData">
+          <div class="plastic-card__shine"></div>
+          <div class="plastic-card__top">
+            <div class="plastic-card__logo" [class]="'bank-logo bank-logo--' + bankKey()">
+              <span class="bank-logo__text">{{ bankShort() }}</span>
+            </div>
+            <span class="plastic-card__network">{{ cardData.type }}</span>
+          </div>
+          <div class="plastic-card__pan">{{ formatPan() }}</div>
+          <div class="plastic-card__bottom">
+            <div>
+              <span class="plastic-card__mini-label">Valid thru</span>
+              <span class="plastic-card__mini-value">{{ cardData.expiry }}</span>
+            </div>
+            <div class="plastic-card__cvv-block">
+              <span class="plastic-card__mini-label">CVV</span>
+              <div class="plastic-card__cvv-row">
+                <span class="plastic-card__mini-value plastic-card__cvv-digits">{{ formatCvv() }}</span>
+                <button
+                  type="button"
+                  class="plastic-card__eye"
+                  (click)="toggleSensitive()"
+                  [attr.aria-label]="showSensitive ? 'Hide card details' : 'Show card details'"
+                >
+                  <svg *ngIf="!showSensitive" class="plastic-card__eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                    <line x1="1" y1="1" x2="23" y2="23"/>
+                  </svg>
+                  <svg *ngIf="showSensitive" class="plastic-card__eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="balance-hero">
+          <span class="balance-hero__label">Available balance</span>
+          <span class="balance-hero__amount">€{{ cardData.balance | number: '1.0-0' }}</span>
+          <span class="balance-hero__bank">{{ bankLabel() }}</span>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-tile stat-tile--out">
+            <span class="stat-tile__label">Spending (sample)</span>
+            <span class="stat-tile__value">{{ spentThisMonth | currency: 'EUR' : 'symbol' : '1.0-0' }}</span>
+          </div>
+          <div class="stat-tile stat-tile--in">
+            <span class="stat-tile__label">Income (sample)</span>
+            <span class="stat-tile__value">{{ incomeThisMonth | currency: 'EUR' : 'symbol' : '1.0-0' }}</span>
+          </div>
+          <div class="stat-tile stat-tile--neutral">
+            <span class="stat-tile__label">Transactions</span>
+            <span class="stat-tile__value">{{ transactions.length }}</span>
+          </div>
+        </div>
+      </aside>
+
+      <section class="details-main">
+        <div class="details-main__head">
+          <h2 class="details-main__title">Recent transactions</h2>
+          <p class="details-main__sub">Last movements on this card</p>
+        </div>
+        <ul class="tx-list">
+          <li class="tx-row" *ngFor="let tx of transactions">
+            <div class="tx-row__icon" [class.tx-row__icon--in]="tx.type === 'income'" [class.tx-row__icon--out]="tx.type === 'outcome'">
+              {{ tx.type === 'income' ? '↓' : '↑' }}
+            </div>
+            <div class="tx-row__body">
+              <span class="tx-row__merchant">{{ tx.merchant }}</span>
+              <span class="tx-row__meta">{{ tx.category }} · {{ tx.date }}</span>
+            </div>
+            <span class="tx-row__amount" [class.tx-row__amount--pos]="tx.type === 'income'">
+              {{ tx.amount > 0 ? '+' : '' }}{{ tx.amount | currency: 'EUR' : 'symbol' : '1.2-2' }}
+            </span>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="details-empty" *ngIf="!cardData">
+      <p>Card not found. <a routerLink="/cards">Return to cards</a></p>
+    </div>
+  </div>
+</main>
