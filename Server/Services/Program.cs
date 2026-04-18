@@ -1,20 +1,14 @@
 using Hash;
 using Hash.Interface;
-using Microsoft.EntityFrameworkCore;
-using Npgsql;
-using PGAdminDAL;
 
 var builder = WebApplication.CreateBuilder(args);
-NpgsqlConnection.GlobalTypeMapper.EnableDynamicJson();
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetSection("Npgsql:ConnectionString").Value));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-builder.Services.AddScoped<IArgon2Hasher, Argon2Hasher>();
+builder.Services.AddScoped<IHASH256, HASH256>();
 
 var app = builder.Build();
 

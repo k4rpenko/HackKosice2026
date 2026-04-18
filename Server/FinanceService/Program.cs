@@ -1,8 +1,8 @@
-using Hash;
-using Hash.Interface;
+using Logger;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using PGAdminDAL;
+using PostgresService;
 
 var builder = WebApplication.CreateBuilder(args);
 NpgsqlConnection.GlobalTypeMapper.EnableDynamicJson();
@@ -13,10 +13,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-builder.Services.AddScoped<IArgon2Hasher, Argon2Hasher>();
+builder.Services.AddSingleton(typeof(IAppLogger<>), typeof(AppLogger<>));
+builder.Services.AddScoped<IPostgresService, PostgresServiceImpl>();
 
 var app = builder.Build();
+
 
 if (app.Environment.IsDevelopment())
 {
