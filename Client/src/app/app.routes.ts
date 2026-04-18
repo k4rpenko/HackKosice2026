@@ -9,6 +9,7 @@ import { CardDetailsComponent } from './pages/card-details/card-details';
 import { SearchUserComponent } from './pages/search-user/search-user';
 import { FriendsComponent } from './pages/friends/friends';
 import { TransferComponent } from './pages/transfer/transfer';
+import { ProfileComponent } from './pages/profile/profile';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -21,5 +22,6 @@ export const routes: Routes = [
   { path: 'search-user', component: SearchUserComponent },
   { path: 'friends', component: FriendsComponent }, 
   { path: 'transfer', component: TransferComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: '**', redirectTo: '' } 
 ];

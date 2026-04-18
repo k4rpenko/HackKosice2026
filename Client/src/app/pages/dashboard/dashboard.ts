@@ -27,15 +27,31 @@ export class DashboardComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.updateThemeClass();
+  }
 
   navigateTo(path: string): void {
     this.router.navigate([`/${path}`]);
   }
 
   toggleTheme(): void {
-    this.isDarkMode = !this.isDarkMode;
-    document.body.classList.toggle('light-theme');
+  this.isDarkMode = !this.isDarkMode;
+  if (this.isDarkMode) {
+    document.body.classList.remove('light-mode');
+  } else {
+    document.body.classList.add('light-mode');
+  }
+}
+
+  private updateThemeClass(): void {
+    if (this.isDarkMode) {
+      document.body.classList.remove('light-mode');
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.add('light-mode');
+      document.body.classList.remove('dark-mode');
+    }
   }
 
   sendPaymentRequests(): void {

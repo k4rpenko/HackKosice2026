@@ -1,0 +1,41 @@
+<div class="profile-container">
+  <div class="profile-card">
+    <header class="profile-header">
+      <button class="back-btn" (click)="goBack()">← Back</button>
+      <h2>User <span class="highlight">Profile</span></h2>
+    </header>
+
+    <section class="user-info-section">
+      <div class="big-avatar">{{ user.avatar }}</div>
+      <div class="user-details">
+        <h3>{{ user.name }}</h3>
+        <p>{{ user.email }}</p>
+        <span class="badge">Member since {{ user.joined }}</span>
+      </div>
+    </section>
+
+    <section class="settings-section">
+      <h4>Connected Banks</h4>
+      <div class="bank-list">
+        <div class="bank-item" *ngFor="let bank of linkedBanks">
+          <span class="bank-icon">{{ bank.icon }}</span>
+          <span class="bank-name">{{ bank.name }}</span>
+          <span class="status-tag">{{ bank.status }}</span>
+        </div>
+        <button class="add-bank-inline" (click)="addBank()">+ Link New Bank</button>
+      </div>
+    </section>
+
+    <section class="account-actions">
+      <button class="action-row">
+        <span>Security & Password</span>
+        <i class="arrow">→</i>
+      </button>
+      <button class="action-row">
+        <span>Privacy Settings</span>
+        <i class="arrow">→</i>
+      </button>
+      <button class="logout-btn" (click)="logout()">Log Out</button>
+    </section>
+  </div>
+</div>

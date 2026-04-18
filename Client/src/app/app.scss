@@ -79,3 +79,30 @@
   from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+:root {
+  --accent-green: #2ecc71;
+  --accent-purple: #a29bfe;
+  --transition-speed: 0.4s;
+}
+
+body {
+  background: radial-gradient(circle at top right, #1a1a1a, #050505);
+  color: #fff;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --text-muted: #666;
+  transition: background var(--transition-speed), color var(--transition-speed);
+}
+
+body.light-mode {
+  background: linear-gradient(135deg, #f0f4f8 0%, #d7e1ec 100%);
+  color: #1a1a1a;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(0, 0, 0, 0.05);
+  --text-muted: #7f8c8d;
+
+  .stat-box.main {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(255, 255, 255, 0.5));
+  }
+}
