@@ -10,6 +10,7 @@ import { SearchUserComponent } from './pages/search-user/search-user';
 import { FriendsComponent } from './pages/friends/friends';
 import { TransferComponent } from './pages/transfer/transfer';
 import { ProfileComponent } from './pages/profile/profile';
+import { JarComponent } from './pages/jar/jar';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -23,5 +24,6 @@ export const routes: Routes = [
   { path: 'friends', component: FriendsComponent }, 
   { path: 'transfer', component: TransferComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'jar', component: JarComponent },
   { path: '**', redirectTo: '' } 
 ];

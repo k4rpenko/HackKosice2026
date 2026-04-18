@@ -96,12 +96,13 @@ body {
 }
 
 body.light-mode {
-  background: linear-gradient(135deg, #f0f4f8 0%, #d7e1ec 100%);
-  color: #1a1a1a;
-  --card-bg: rgba(255, 255, 255, 0.7);
-  --card-border: rgba(0, 0, 0, 0.05);
-  --text-muted: #7f8c8d;
-
+  --bg-main: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --card-bg: rgba(255, 255, 255, 0.7); // Біле скло
+  --card-border: rgba(255, 255, 255, 0.4);
+  --text-main: #2d3436; // Темно-сірий замість чорного
+  --text-muted: #636e72;
+  --accent-green: #00b894; // Більш насичений зелений для світлої теми
+  --jar-glass: rgba(255, 255, 255, 0.5);
   .stat-box.main {
     background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(255, 255, 255, 0.5));
   }

@@ -1,0 +1,52 @@
+<div class="jar-page-container">
+  <div class="glass-card main-wrapper">
+    
+    <div class="visual-section">
+      <div class="jar-container">
+        <div class="jar-lid"></div>
+        <div class="glass-body">
+          <div class="liquid-fill" [style.height.%]="progressPercentage">
+            <div class="bubble b1"></div>
+            <div class="bubble b2"></div>
+            <div class="bubble b3"></div>
+          </div>
+          <div class="percentage-overlay">{{ progressPercentage | number:'1.0-0' }}%</div>
+        </div>
+      </div>
+      <div class="stats-badge">
+        <span>Collected:</span>
+        <span class="amount">€{{ currentCollected }} / €{{ totalGoal }}</span>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <header>
+        <span class="tag">Active Goal</span>
+        <h1>{{ jarTitle }}</h1>
+        <p class="description">Split the bill for last night's dinner with the crew.</p>
+      </header>
+
+      <div class="participants-grid">
+        <div class="participant-card" *ngFor="let p of participants; let i = index" [class.paid]="p.status === 'paid'">
+          <div class="avatar-ring">
+            <div class="avatar">{{ p.avatar }}</div>
+            <div class="status-check" *ngIf="p.status === 'paid'">✓</div>
+          </div>
+          <div class="p-details">
+            <span class="name">{{ p.name }}</span>
+            <span class="share">€{{ p.amountToPay }}</span>
+          </div>
+          <button class="pay-btn" *ngIf="p.status === 'pending'" (click)="confirmPayment(i)">
+            Pay Now
+          </button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary">Share Invite</button>
+        <button class="btn-secondary" (click)="addParticipant()">+ Add Person</button>
+      </div>
+    </div>
+
+  </div>
+</div>
