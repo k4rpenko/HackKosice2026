@@ -1,0 +1,79 @@
+<div class="friends-page">
+  <header class="page-header">
+    <h1>Friends & <span class="highlight">Family</span> </h1>
+    <button class="add-friend-btn" (click)="createSharedAccount()">+ Create Shared Account</button>
+  </header>
+
+  <section class="shared-wallet-section" *ngIf="sharedAccount">
+    <div class="wallet-card">
+      <div class="wallet-info">
+        <div class="label">Shared Family Wallet</div>
+        <div class="balance">€{{ sharedAccount.balance | number:'1.2-2' }}</div>
+        <div class="members-avatars">
+          <div class="mini-avatar" *ngFor="let member of sharedAccount.members" [title]="member.name">
+            {{ member.initials }}
+          </div>
+          <button class="add-member-mini">+</button>
+        </div>
+      </div>
+      
+      <div class="wallet-stats">
+        <div class="stat-item">
+          <span>This month</span>
+          <strong class="text-green">+€1,200</strong>
+        </div>
+        <div class="stat-item">
+          <span>AI Forecast</span>
+          <strong class="text-purple">Safe to spend</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="shared-history">
+      <h4>Recent Activity</h4>
+      <div class="history-item" *ngFor="let tx of sharedAccount.recentTransactions">
+        <span class="tx-user">{{ tx.user }}:</span>
+        <span class="tx-desc">{{ tx.description }}</span>
+        <span class="tx-amount" [class.negative]="tx.amount < 0">
+          {{ tx.amount > 0 ? '+' : '' }}{{ tx.amount }}€
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="friends-list">
+    <div class="category-block" *ngIf="familyMembers.length > 0">
+      <h3 class="category-title">Family Members </h3>
+      <div class="people-grid">
+        <div class="person-card" *ngFor="let p of familyMembers">
+          <div class="avatar">{{ p.initials }}</div>
+          <div class="info">
+            <span class="name">{{ p.name }}</span>
+            <span class="role">{{ p.role }}</span>
+          </div>
+          <div class="actions">
+            <button class="btn-manage" (click)="managePerson(p)">Manage</button>
+            <button class="btn-remove" (click)="removePerson(p.id)">✕</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-block" *ngIf="friends.length > 0">
+      <h3 class="category-title">Friends </h3>
+      <div class="people-grid">
+        <div class="person-card" *ngFor="let p of friends">
+          <div class="avatar" [class.gray]="!p.isIndebted">{{ p.initials }}</div>
+          <div class="info">
+            <span class="name">{{ p.name }}</span>
+            <span class="status" [class.text-green]="p.isIndebted">{{ p.status || 'No active debts' }}</span>
+          </div>
+          <div class="actions">
+            <button class="btn-manage" (click)="managePerson(p)">Manage</button>
+            <button class="btn-remove" (click)="removePerson(p.id)">✕</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

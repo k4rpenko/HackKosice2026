@@ -1,0 +1,42 @@
+<div class="transfer-page-container">
+  <div class="transfer-card">
+    <header class="transfer-header">
+      <h2>Send <span class="highlight">Money</span> </h2>
+    </header>
+
+    <div class="main-form">
+      <div class="field-group">
+        <label>From Account</label>
+        <div class="custom-card-input">
+          <input type="text" placeholder="Enter card number or select saved" [(ngModel)]="sourceCard">
+          <div class="bank-badge">Saved</div>
+        </div>
+      </div>
+
+      <div class="contacts-scroll">
+        <div class="contact-bubble" *ngFor="let c of recentContacts" 
+             [class.selected]="selectedContact?.id === c.id" (click)="selectContact(c)">
+          <div class="avatar" [style.background]="c.avatarColor">{{c.initials}}</div>
+          <span>{{c.name}}</span>
+        </div>
+      </div>
+
+      <div class="amount-section">
+        <label>Amount</label>
+        <div class="amount-input-box">
+          <span class="currency">€</span>
+          <input type="number" [(ngModel)]="amount" placeholder="0">
+        </div>
+      </div>
+
+      <div class="ai-box" *ngIf="selectedContact">
+        <span class="bot-head">🤖</span>
+        <p>Transfer to {{selectedContact.name}} is instant via SEPA.</p>
+      </div>
+
+      <button class="confirm-btn" [disabled]="!amount" (click)="confirmTransfer()">
+        Confirm & Send
+      </button>
+    </div>
+  </div>
+</div>

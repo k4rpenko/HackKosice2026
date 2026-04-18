@@ -10,29 +10,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard.scss']
 })
 export class DashboardComponent implements OnInit {
-  
+  userName: string = 'Bob';
+  totalBalance: number = 48320;
+  isDarkMode: boolean = true;
+
   transactions = [
-    {
-      icon: '🛒',
-      name: 'Lidl — Groceries',
-      meta: 'Today, 14:32 · Revolut',
-      amount: -487,
-      type: 'negative'
-    },
-    {
-      icon: '🍕',
-      name: "Domino's — Dinner",
-      meta: 'Yesterday, 20:15 · N26 · Shared',
-      amount: -620,
-      type: 'negative'
-    },
-    {
-      icon: '💳',
-      name: 'Transfer from Maria',
-      meta: 'Yesterday, 18:00 · Revolut',
-      amount: 250,
-      type: 'positive'
-    }
+    { icon: '🛒', name: 'Lidl — Groceries', meta: 'Today, 14:32 · Revolut', amount: -487, type: 'negative' },
+    { icon: '🍕', name: "Domino's — Dinner", meta: 'Yesterday, 20:15 · N26 · Shared', amount: -620, type: 'negative' },
+    { icon: '💳', name: 'Transfer from Maria', meta: 'Yesterday, 18:00 · Revolut', amount: 250, type: 'positive' }
   ];
 
   debts = [
@@ -42,20 +27,30 @@ export class DashboardComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
-        // Simulate fetching user data and transactions
+  ngOnInit(): void {}
+
+  navigateTo(path: string): void {
+    this.router.navigate([`/${path}`]);
+  }
+
+  toggleTheme(): void {
+    this.isDarkMode = !this.isDarkMode;
+    document.body.classList.toggle('light-theme');
+  }
+
+  sendPaymentRequests(): void {
+    alert('Payment requests sent to all members of the split!');
   }
 
   remindUser(userName: string): void {
-    console.log(`Notification sent to ${userName}`);
     alert(`Reminder sent to ${userName}!`);
   }
 
-  goToSettings(): void {
-    this.router.navigate(['/settings']);
+  showAIReport(): void {
+    alert('Generating detailed AI Financial Report...');
   }
 
-  logout(): void {
-    this.router.navigate(['/']);
+  addExpense(): void {
+    alert('Opening add expense dialog...');
   }
 }

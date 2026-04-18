@@ -1,0 +1,118 @@
+.transfer-page-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  width: 100%;
+
+  .transfer-card {
+    width: 100%;
+    max-width: 440px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 24px;
+    box-sizing: border-box; 
+
+    .highlight { color: #2ecc71; }
+    
+    .field-group {
+      margin-bottom: 20px;
+      label { display: block; color: #555; font-size: 0.8rem; margin-bottom: 8px; }
+      
+      .custom-card-input {
+        position: relative;
+        input {
+          width: 100%;
+          background: #0d1117;
+          border: 1px solid #222;
+          padding: 12px 15px;
+          border-radius: 12px;
+          color: #fff;
+          box-sizing: border-box;
+          &:focus { border-color: #2ecc71; }
+        }
+        .bank-badge {
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 0.7rem;
+          background: rgba(46, 204, 113, 0.1);
+          color: #2ecc71;
+          padding: 4px 8px;
+          border-radius: 6px;
+        }
+      }
+    }
+
+    .contacts-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+      &::-webkit-scrollbar { height: 4px; }
+      &::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+
+      .contact-bubble {
+        flex-shrink: 0;
+        text-align: center;
+        cursor: pointer;
+        .avatar {
+          width: 48px; height: 48px; border-radius: 14px;
+          display: flex; align-items: center; justify-content: center;
+          font-weight: bold; color: #000; margin-bottom: 5px;
+          border: 2px solid transparent;
+        }
+        span { font-size: 0.7rem; color: #888; }
+        &.selected .avatar { border-color: #2ecc71; }
+      }
+    }
+
+    .amount-section {
+      margin-bottom: 25px;
+      .amount-input-box {
+        position: relative;
+        background: rgba(255,255,255,0.03);
+        border-radius: 16px;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        
+        .currency { font-size: 1.5rem; font-weight: 800; color: #2ecc71; margin-right: 10px; }
+        input {
+          background: transparent;
+          border: none;
+          color: #fff;
+          font-size: 2rem;
+          font-weight: 800;
+          width: 100%; 
+          outline: none;
+        }
+      }
+    }
+
+    .ai-box {
+      background: rgba(162, 155, 254, 0.05);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      p { font-size: 0.8rem; color: #a29bfe; margin: 0; }
+    }
+
+    .confirm-btn {
+      width: 100%;
+      padding: 16px;
+      background: #2ecc71;
+      color: #000;
+      border: none;
+      border-radius: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      &:disabled { opacity: 0.3; }
+    }
+  }
+}

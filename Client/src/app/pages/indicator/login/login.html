@@ -1,1 +1,35 @@
-<p>login works!</p>
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="logo-area">
+      <h2>Welcome <span class="highlight">Back</span></h2>
+      <p>Manage your shared finances easily</p>
+    </div>
+
+    <button class="google-btn" (click)="loginWithGoogle()">
+      <img src="media/Google.jpg" alt="Google" width="20">
+      Continue with Google
+    </button>
+
+    <div class="divider">
+      <span>or use email</span>
+    </div>
+
+    <form (ngSubmit)="onLogin()">
+      <div class="input-group">
+        <label>Email Address</label>
+        <input type="email" name="email" [(ngModel)]="email" placeholder="name@mail.com" required>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" name="pass" [(ngModel)]="pass" placeholder="••••••••" required>
+      </div>
+
+      <button type="submit" class="login-submit-btn">Sign In</button>
+    </form>
+
+    <div class="auth-footer">
+      Don't have an account? <a routerLink="/register">Create one</a>
+    </div>
+  </div>
+</div>
