@@ -3,3 +3,9 @@
 /Server/Identification/Identification/obj
 /Server/Identification/Redis/obj
 /Server/Identification/PGAdminDAL/obj
+/Server/.vs
+/Server/Identification/obj
+/Server/Logger/obj
+/Server/PGAdminDAL/obj
+/Server/Redis/obj
+/Server/Server/obj

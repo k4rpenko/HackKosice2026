@@ -1,9 +1,12 @@
 <Solution>
-  <Folder Name="/components/">
+  <Folder Name="/Components/">
+    <Project Path="Logger/Logger.csproj" />
     <Project Path="PGAdminDAL/PGAdminDAL.csproj" />
     <Project Path="Redis/Redis.csproj" />
   </Folder>
-  <Folder Name="/REST/">
+  <Folder Name="/Components/Hash/" />
+  <Folder Name="/Rest/">
     <Project Path="Identification/Identification.csproj" />
   </Folder>
+  <Folder Name="/Tests/" />
 </Solution>
