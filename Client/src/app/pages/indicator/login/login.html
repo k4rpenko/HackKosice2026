@@ -1,35 +1,57 @@
-<div class="auth-wrapper">
-  <div class="auth-card">
-    <div class="logo-area">
-      <h2>Welcome <span class="highlight">Back</span></h2>
-      <p>Manage your shared finances easily</p>
+<div class="container">
+    <div class="card">
+        <div class="header">
+            <div class="logo" routerLink="/">
+                <div class="logo-icon"></div>
+                <span>SplitPay</span>
+            </div>
+            <div class="stepper">
+                <span class="step active"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+            </div>
+        </div>
+
+        <h1>Login Account</h1>
+        <p class="subtitle">Enter your details or sign in via social networks</p>
+
+        <div class="social">
+            <button class="social-btn google-btn">
+                <img src="media/Google.jpg" alt="Google Logo" class="social-logo">
+                Continue with Google
+            </button>
+        </div>
+
+        <div class="divider">
+            <span>or via email</span>
+        </div>
+
+        <form class="form">
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" placeholder="Bob@email.com">
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" placeholder="Min. 8 characters">
+            </div>
+
+            <div class="checkbox-container">
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="terms">
+                    <span class="checkmark"></span>
+                    <span class="label-text">
+                        I agree to the <span class="link">Terms of Service</span> and <span class="link">Privacy
+                            Policy</span>
+                    </span>
+                </label>
+            </div>
+
+            <button type="button" (click)="onLogin($event)" class="submit-btn">Log In</button>
+
+        </form>
+
+        <p class="footer-text">Already have an account?<a class="link" routerLink="/register"> <span> Register</span></a></p>
     </div>
-
-    <button class="google-btn" (click)="loginWithGoogle()">
-      <img src="media/Google.jpg" alt="Google" width="20">
-      Continue with Google
-    </button>
-
-    <div class="divider">
-      <span>or use email</span>
-    </div>
-
-    <form (ngSubmit)="onLogin()">
-      <div class="input-group">
-        <label>Email Address</label>
-        <input type="email" name="email" [(ngModel)]="email" placeholder="name@mail.com" required>
-      </div>
-
-      <div class="input-group">
-        <label>Password</label>
-        <input type="password" name="pass" [(ngModel)]="pass" placeholder="••••••••" required>
-      </div>
-
-      <button type="submit" class="login-submit-btn">Sign In</button>
-    </form>
-
-    <div class="auth-footer">
-      Don't have an account? <a routerLink="/register">Create one</a>
-    </div>
-  </div>
 </div>

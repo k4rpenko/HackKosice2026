@@ -1,41 +1,74 @@
-<div class="profile-container">
-  <div class="profile-card">
-    <header class="profile-header">
-      <button class="back-btn" (click)="goBack()">← Back</button>
-      <h2>User <span class="highlight">Profile</span></h2>
-    </header>
-
-    <section class="user-info-section">
-      <div class="big-avatar">{{ user.avatar }}</div>
-      <div class="user-details">
-        <h3>{{ user.name }}</h3>
-        <p>{{ user.email }}</p>
-        <span class="badge">Member since {{ user.joined }}</span>
-      </div>
-    </section>
-
-    <section class="settings-section">
-      <h4>Connected Banks</h4>
-      <div class="bank-list">
-        <div class="bank-item" *ngFor="let bank of linkedBanks">
-          <span class="bank-icon">{{ bank.icon }}</span>
-          <span class="bank-name">{{ bank.name }}</span>
-          <span class="status-tag">{{ bank.status }}</span>
+<main class="app-page-shell">
+  <app-header />
+  <div class="app-page-shell__body profile-container">
+    <div class="profile-layout">
+      <article class="profile-card">
+        <div class="profile-cover">
+          <div class="profile-cover__gradient"></div>
+          <button type="button" class="profile-back" (click)="goBack()" aria-label="Back">
+            <span class="profile-back__icon">←</span>
+            <span>Back</span>
+          </button>
         </div>
-        <button class="add-bank-inline" (click)="addBank()">+ Link New Bank</button>
-      </div>
-    </section>
 
-    <section class="account-actions">
-      <button class="action-row">
-        <span>Security & Password</span>
-        <i class="arrow">→</i>
-      </button>
-      <button class="action-row">
-        <span>Privacy Settings</span>
-        <i class="arrow">→</i>
-      </button>
-      <button class="logout-btn" (click)="logout()">Log Out</button>
-    </section>
+        <div class="profile-card__inner">
+          <div class="profile-identity">
+            <div class="profile-avatar-wrap">
+              <div class="profile-avatar">{{ user.avatar }}</div>
+              <span class="profile-avatar-ring" aria-hidden="true"></span>
+            </div>
+            <div class="profile-identity__text">
+              <p class="profile-eyebrow">Account</p>
+              <h1 class="profile-title">
+                {{ user.name }}
+              </h1>
+              <p class="profile-email">{{ user.email }}</p>
+              <div class="profile-meta">
+                <span class="profile-pill">
+                  <span class="profile-pill__dot" aria-hidden="true"></span>
+                  Member since {{ user.joined }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <section class="profile-section">
+            <h2 class="profile-section__title">Connected banks</h2>
+            <p class="profile-section__hint">Banks you use for transfers and balances</p>
+            <ul class="bank-list">
+              <li class="bank-item" *ngFor="let bank of linkedBanks">
+                <div class="bank-item__icon" aria-hidden="true">{{ bank.icon }}</div>
+                <div class="bank-item__body">
+                  <span class="bank-item__name">{{ bank.name }}</span>
+                  <span class="bank-item__status">{{ bank.status }}</span>
+                </div>
+                <span class="bank-item__chev" aria-hidden="true">›</span>
+              </li>
+            </ul>
+            <button type="button" class="add-bank-btn" (click)="addBank()">
+              <span class="add-bank-btn__plus">+</span>
+              Link another bank
+            </button>
+          </section>
+
+          <section class="profile-section profile-section--actions">
+            <h2 class="profile-section__title">Settings</h2>
+            <div class="action-list">
+              <button type="button" class="action-tile">
+                <span class="action-tile__label">Security &amp; password</span>
+                <span class="action-tile__arrow">→</span>
+              </button>
+              <button type="button" class="action-tile">
+                <span class="action-tile__label">Privacy</span>
+                <span class="action-tile__arrow">→</span>
+              </button>
+            </div>
+            <button type="button" class="logout-btn" (click)="logout()">
+              Log out
+            </button>
+          </section>
+        </div>
+      </article>
+    </div>
   </div>
-</div>
+</main>

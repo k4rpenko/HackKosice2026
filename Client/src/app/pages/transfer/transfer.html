@@ -1,42 +1,76 @@
-<div class="transfer-page-container">
-  <div class="transfer-card">
-    <header class="transfer-header">
-      <h2>Send <span class="highlight">Money</span> </h2>
-    </header>
+<main class="app-page-shell">
+  <app-header />
+  <div class="app-page-shell__body transfer-page-container">
+    <div class="transfer-card">
+      <header class="transfer-header">
+        <p class="transfer-eyebrow">Instant transfer</p>
+        <h1 class="transfer-title">Send <span class="highlight">money</span></h1>
+        <p class="transfer-subtitle">SEPA · No extra fees for saved contacts</p>
+      </header>
 
-    <div class="main-form">
-      <div class="field-group">
-        <label>From Account</label>
-        <div class="custom-card-input">
-          <input type="text" placeholder="Enter card number or select saved" [(ngModel)]="sourceCard">
-          <div class="bank-badge">Saved</div>
+      <div class="main-form">
+        <div class="field-group">
+          <label class="field-label" for="transfer-from">From account</label>
+          <div class="custom-card-input">
+            <input
+              id="transfer-from"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              spellcheck="false"
+              [attr.maxlength]="maxCardFieldChars"
+              [value]="cardNumberFormatted"
+              placeholder="16-digit card number"
+              (input)="onCardFieldInput($event)"
+              (keydown)="onCardFieldKeydown($event)"
+              (paste)="onCardFieldPaste($event)"
+            />
+            <span class="bank-badge" *ngIf="cardBrandLabel">{{ cardBrandLabel }}</span>
+          </div>
         </div>
-      </div>
 
-      <div class="contacts-scroll">
-        <div class="contact-bubble" *ngFor="let c of recentContacts" 
-             [class.selected]="selectedContact?.id === c.id" (click)="selectContact(c)">
-          <div class="avatar" [style.background]="c.avatarColor">{{c.initials}}</div>
-          <span>{{c.name}}</span>
+        <div class="contacts-block">
+          <span class="field-label">Send to</span>
+          <div class="contacts-scroll">
+            <button
+              type="button"
+              class="contact-bubble"
+              *ngFor="let c of recentContacts"
+              [class.selected]="selectedContact?.id === c.id"
+              (click)="selectContact(c)"
+            >
+              <div class="avatar" [style.background]="c.avatarColor">{{ c.initials }}</div>
+              <span class="contact-name">{{ c.name }}</span>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div class="amount-section">
-        <label>Amount</label>
-        <div class="amount-input-box">
-          <span class="currency">€</span>
-          <input type="number" [(ngModel)]="amount" placeholder="0">
+        <div class="amount-section">
+          <label class="field-label" for="transfer-amount">Amount</label>
+          <div class="amount-input-box">
+            <span class="currency" aria-hidden="true">€</span>
+            <input
+              id="transfer-amount"
+              type="number"
+              [(ngModel)]="amount"
+              placeholder="0"
+              min="0"
+              step="0.01"
+            />
+          </div>
         </div>
-      </div>
 
-      <div class="ai-box" *ngIf="selectedContact">
-        <span class="bot-head">🤖</span>
-        <p>Transfer to {{selectedContact.name}} is instant via SEPA.</p>
-      </div>
+        <div class="ai-box" *ngIf="selectedContact">
+          <span class="bot-head" aria-hidden="true">✨</span>
+          <p>
+            Transfer to <strong>{{ selectedContact.name }}</strong> is usually instant via SEPA.
+          </p>
+        </div>
 
-      <button class="confirm-btn" [disabled]="!amount" (click)="confirmTransfer()">
-        Confirm & Send
-      </button>
+        <button type="button" class="confirm-btn" [disabled]="!amount" (click)="confirmTransfer()">
+          Confirm &amp; send
+        </button>
+      </div>
     </div>
   </div>
-</div>
+</main>

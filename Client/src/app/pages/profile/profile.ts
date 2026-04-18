@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Header } from "../../../components/header/header.component";
 
 @Component({
   selector: 'app-profile',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Header],
   templateUrl: './profile.html',
   styleUrls: ['./profile.scss']
 })
@@ -19,14 +19,13 @@ export class ProfileComponent {
   };
 
   linkedBanks = [
-    { name: 'Monobank', icon: '🏦', status: 'Connected' },
     { name: 'Revolut', icon: '💳', status: 'Connected' }
   ];
 
   constructor(private router: Router) {}
 
   goBack() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/home']);
   }
 
   addBank() {

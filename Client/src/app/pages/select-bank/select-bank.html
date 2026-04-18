@@ -11,10 +11,6 @@
     <h1>Link your bank</h1>
     <p class="subtitle">Choose the banks you use. You can add multiple.</p>
 
-    <div class="search-bar">
-      <input type="text" placeholder="Search for a bank...">
-    </div>
-
     <div class="banks-grid">
       <div class="bank-item" [class.selected]="selectedBank === 'revolut'" (click)="select('revolut')">
         <div class="bank-icon">
@@ -49,7 +45,6 @@
     <button class="submit-btn" [disabled]="!selectedBank" (click)="onContinue()">
       Continue 
     </button>
-    
-    <p class="skip-text" (click)="onSkip()">Skip, I'll add it later</p>
+
   </div>
 </div>

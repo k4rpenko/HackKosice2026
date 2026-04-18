@@ -16,8 +16,9 @@ export class LoginComponent {
 
   constructor(private router: Router) {}
 
-  onLogin() {
-    this.router.navigate(['/bank-setup']);
+  onLogin(event: Event) {
+    event.preventDefault();
+    this.router.navigate(['/select-bank']); 
   }
 
   loginWithGoogle() {

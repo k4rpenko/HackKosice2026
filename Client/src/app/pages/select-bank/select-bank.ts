@@ -20,11 +20,11 @@ export class SelectBankComponent {
 
   onContinue() {
     if (this.selectedBank) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/home']);
     }
   }
 
   onSkip() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/home']);
   }
 }
