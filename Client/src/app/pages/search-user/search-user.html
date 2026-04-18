@@ -1,0 +1,67 @@
+<div class="search-page-wrapper">
+    <div class="search-header">
+        <h2>Find <span class="highlight">People</span></h2>
+        <p>Search by email to add them to your inner circle</p>
+    </div>
+
+    <div class="search-bar-container">
+        <div class="input-group">
+            <input 
+                type="email" 
+                [(ngModel)]="searchEmail" 
+                placeholder="example@mail.com"
+                (keyup.enter)="onSearch()"
+            >
+            <button class="search-action-btn" (click)="onSearch()">
+                Search
+            </button>
+        </div>
+    </div>
+
+    <div class="results-area" *ngIf="searchPerformed">
+        
+        <div class="user-card-result" *ngIf="foundUser; else notFound">
+            <div class="user-main-info">
+                <div class="user-avatar-circle">{{ foundUser.avatar }}</div>
+                <div class="user-text">
+                    <h3>{{ foundUser.name }}</h3>
+                    <p>{{ foundUser.email }}</p>
+                </div>
+            </div>
+
+            <div class="user-status-section">
+                <div class="current-status-tag" *ngIf="foundUser.status !== 'none'">
+                    Status: <span [class]="foundUser.status.toLowerCase()">{{ foundUser.status }}</span>
+                </div>
+
+                <div class="action-grid">
+                    <button 
+                        *ngIf="foundUser.status !== 'Friend'" 
+                        class="btn-action friend" 
+                        (click)="updateStatus('Friend')">
+                        Add to Friends
+                    </button>
+                    <button 
+                        *ngIf="foundUser.status !== 'Family'" 
+                        class="btn-action family" 
+                        (click)="updateStatus('Family')">
+                        Add to Family
+                    </button>
+                    <button 
+                        *ngIf="foundUser.status !== 'none'" 
+                        class="btn-remove" 
+                        (click)="updateStatus('none')">
+                        Remove connection
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #notFound>
+            <div class="no-user-box">
+                <div class="warning-icon">!</div>
+                <p>User with email <b>{{searchEmail}}</b> not found in our system.</p>
+            </div>
+        </ng-template>
+    </div>
+</div>
