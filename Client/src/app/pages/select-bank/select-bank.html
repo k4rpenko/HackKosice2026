@@ -17,21 +17,27 @@
 
     <div class="banks-grid">
       <div class="bank-item" [class.selected]="selectedBank === 'revolut'" (click)="select('revolut')">
-        <div class="bank-icon revolut"></div>
+        <div class="bank-icon">
+          <img src="media/Revolut.png" alt="Revolut">
+        </div>
         <span class="bank-name">Revolut</span>
         <span class="bank-desc">Card / Account</span>
         <div class="check-icon" *ngIf="selectedBank === 'revolut'">✓</div>
       </div>
 
       <div class="bank-item" [class.selected]="selectedBank === 'tatra'" (click)="select('tatra')">
-        <div class="bank-icon tatra"></div>
+        <div class="bank-icon">
+          <img src="media/Tatra.png" alt="Tatra">
+        </div>
         <span class="bank-name">Tatra Banka</span>
         <span class="bank-desc">Card / Account</span>
         <div class="check-icon" *ngIf="selectedBank === 'tatra'">✓</div>
       </div>
 
       <div class="bank-item" [class.selected]="selectedBank === 'klarna'" (click)="select('klarna')">
-        <div class="bank-icon klarna"></div>
+        <div class="bank-icon">
+          <img src="media/Klarna.jpg" alt="Klarna">
+        </div>
         <span class="bank-name">Klarna</span>
         <span class="bank-desc">Card / Account</span>
         <div class="check-icon" *ngIf="selectedBank === 'klarna'">✓</div>

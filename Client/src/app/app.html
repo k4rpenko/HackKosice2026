@@ -1,5 +1,26 @@
-<main class="main">
+<div class="app-layout">
+  <aside class="sidebar" *ngIf="authService.isLoggedIn">
+    <div class="logo-box" routerLink="/dashboard">
+      <div class="logo-icon"></div>
+    </div>
+    
+    <nav class="nav-menu">
+      <div class="nav-item" routerLink="/dashboard" routerLinkActive="active">
+        <i class="icon-home"></i>
+      </div>
+      <div class="nav-item" routerLink="/cards" routerLinkActive="active">
+        <i class="icon-wallet"></i>
+      </div>
+      <div class="nav-item"><i class="icon-list"></i></div>
+      <div class="nav-item"><i class="icon-users"></i></div>
+      <div class="nav-item"><i class="icon-chart"></i></div>
+      <div class="nav-item bot"><i class="icon-bot"></i></div>
+    </nav>
 
-</main>
+    <div class="nav-item settings"><i class="icon-settings"></i></div>
+  </aside>
 
-<router-outlet />
+  <main class="content-area" [style.margin-left]="authService.isLoggedIn ? '80px' : '0'">
+    <router-outlet></router-outlet>
+  </main>
+</div>

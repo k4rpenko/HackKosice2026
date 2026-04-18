@@ -1,0 +1,46 @@
+<div class="card-details-page">
+  <header class="details-header">
+    <button class="back-btn" routerLink="/cards">← Back to List</button>
+    <h1>Card <span class="highlight">Details</span></h1>
+  </header>
+
+  <div class="main-content-layout">
+    <aside class="card-info-panel">
+      <div class="premium-card-visual" [class.active]="cardData">
+        <div class="card-top">
+          <span class="bank-tag">MONOBANK</span>
+          <span class="card-type">{{ cardData?.type || 'Loading...' }}</span>
+        </div>
+        <div class="card-number">•••• •••• •••• {{ cardData?.number?.slice(-4) || '0000' }}</div>
+        <div class="card-bottom">
+          <div class="exp">EXP: {{ cardData?.expiry || '**/**' }}</div>
+          <div class="cvv">CVV: ***</div>
+        </div>
+      </div>
+
+      <div class="balance-summary">
+        <span class="label">Total Balance</span>
+        <h2>€{{ cardData?.balance | number:'1.0-0' }}</h2>
+      </div>
+    </aside>
+
+    <main class="transactions-panel">
+      <h3>Recent Transactions</h3>
+      
+      <div class="transactions-list">
+        <div class="transaction-item" *ngFor="let tx of transactions">
+          <div class="tx-icon" [class.income]="tx.type === 'income'" [class.outcome]="tx.type === 'outcome'">
+            {{ tx.type === 'income' ? '↓' : '↑' }}
+          </div>
+          <div class="tx-details">
+            <span class="merchant">{{ tx.merchant }}</span>
+            <span class="category-date">{{ tx.category }} • {{ tx.date }}</span>
+          </div>
+          <div class="tx-amount" [class.positive]="tx.type === 'income'">
+            {{ tx.amount > 0 ? '+' : '' }}{{ tx.amount | currency:'EUR':'symbol':'1.2-2' }}
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

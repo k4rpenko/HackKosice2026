@@ -1,0 +1,130 @@
+.card-details-page {
+  padding: 40px 60px;
+  background: radial-gradient(circle at top right, #0d1117 0%, #050505 100%);
+  min-height: 100vh;
+
+  .details-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 50px;
+
+    .back-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      &:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.3); }
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      color: #fff;
+      .highlight { color: #2ecc71; }
+    }
+  }
+
+  .main-content-layout {
+    display: flex;
+    gap: 60px;
+
+    .card-info-panel {
+      flex: 0 0 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+
+      .premium-card-visual {
+        background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 30px;
+        padding: 35px;
+        height: 240px;
+        position: relative;
+        overflow: hidden;
+
+        &.active {
+          background: linear-gradient(135deg, #111 0%, #000 100%);
+          border-color: #2ecc71;
+        }
+
+        .card-top {
+          display: flex; justify-content: space-between; align-items: center; margin-bottom: 45px;
+          .bank-tag { font-weight: 900; font-size: 12px; color: #2ecc71; text-transform: uppercase; }
+          .card-type { font-size: 13px; color: #666; font-weight: 500; }
+        }
+
+        .card-number {
+          font-size: 1.7rem; font-family: 'SF Mono', monospace; color: #fff; margin-bottom: 40px; letter-spacing: 3px;
+        }
+
+        .card-bottom {
+          display: flex; gap: 30px;
+          .exp, .cvv { font-size: 14px; color: #eee; font-weight: 600; }
+        }
+      }
+
+      .balance-summary {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.01);
+        padding: 25px;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.03);
+        .label { color: #444; font-size: 11px; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        h2 { font-size: 2.8rem; font-weight: 800; color: #fff; }
+      }
+    }
+
+    .transactions-panel {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.01);
+      padding: 35px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.03);
+
+      h3 { font-size: 1.5rem; color: #fff; margin-bottom: 30px; font-weight: 700; }
+
+      .transactions-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .transaction-item {
+          display: flex;
+          align-items: center;
+          background: rgba(255, 255, 255, 0.02);
+          padding: 18px;
+          border-radius: 16px;
+          border: 1px solid transparent;
+          transition: 0.2s;
+
+          &:hover { border-color: rgba(255,255,255,0.05); background: rgba(255,255,255,0.04); }
+
+          .tx-icon {
+            width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; margin-right: 20px;
+            &.income { background: rgba(46, 204, 113, 0.1); color: #2ecc71; }
+            &.outcome { background: rgba(231, 76, 60, 0.1); color: #e74c3c; }
+          }
+
+          .tx-details {
+            flex: 1;
+            display: flex; flex-direction: column;
+            .merchant { color: #fff; font-weight: 600; font-size: 1rem; margin-bottom: 3px; }
+            .category-date { color: #555; font-size: 0.8rem; }
+          }
+
+          .tx-amount {
+            font-size: 1.1rem; font-weight: 700; color: #fff;
+            &.positive { color: #2ecc71; }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+<div class="cards-page">
+    <div class="page-header">
+        <h1>My <span class="highlight">Cards</span></h1>
+        <button class="add-btn-main" (click)="openModal()" *ngIf="userCards.length > 0">
+            + Add New Card
+        </button>
+    </div>
+
+    <div class="empty-state" *ngIf="userCards.length === 0">
+        <div class="empty-visual">
+            <div class="glow-ring"></div>
+            <div class="plus-icon-container">
+                <span class="plus-symbol">+</span>
+            </div>
+        </div>
+        <div class="empty-text">
+            <h2>Oops! There's <span class="highlight">nothing</span> here...</h2>
+            <p>Your wallet is empty. Add your bank cards to start managing your finances.</p>
+        </div>
+        <div class="empty-actions">
+            <button class="btn-neon" (click)="openModal()">
+                Add Your First Card
+            </button>
+        </div>
+    </div>
+
+    <div class="cards-list" *ngIf="userCards.length > 0">
+        <div class="card-list-item" *ngFor="let card of userCards" [class.active-view]="!card.isLocked">
+            
+            <div class="card-action-left">
+                <button class="action-btn view-toggle" (click)="toggleView(card)">
+                    <img *ngIf="card.isLocked" src="media/eye-close.png" alt="Closed">
+                    <img *ngIf="!card.isLocked" src="media/eye-open.png" alt="Open">
+                </button>
+            </div>
+
+            <div class="card-main-info">
+                <div class="card-brand-info">
+                    <span class="bank-name">MONOBANK</span>
+                    <span class="card-type">{{card.type}}</span>
+                </div>
+                <div class="card-number-wrapper">
+                    <span class="card-number">{{ formatNumber(card.number, card.isLocked) }}</span>
+                    <div class="card-extra-data" *ngIf="!card.isLocked">
+                        <span class="exp">EXP: {{ card.expiry }}</span>
+                        <span class="cvv">CVV: {{ card.cvv }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-action-right">
+                <div class="card-balance-info">
+                    <span class="label">Balance</span>
+                    <span class="amount">€{{ card.balance | number:'1.0-0' }}</span>
+                </div>
+                <button class="action-btn settings-btn" (click)="openCardDetails(card)">
+                    <img src="media/settings.png" alt="Settings">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" *ngIf="showAddModal" (click)="closeModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Select Card to Add</h3>
+                <p>Link a card from your bank account</p>
+            </div>
+
+            <div class="bank-options">
+                <div class="bank-option" *ngFor="let c of availableBankCards" (click)="addCard(c)">
+                    <div class="c-preview"><span class="c-brand">VISA</span></div>
+                    <div class="c-info">
+                        <span class="c-type">{{c.type}}</span>
+                        <span class="c-number">•••• {{c.number.slice(-4)}}</span>
+                    </div>
+                    <button class="c-add-icon">+</button>
+                </div>
+            </div>
+            <button class="modal-cancel" (click)="closeModal()">Dismiss</button>
+        </div>
+    </div>
+</div>
