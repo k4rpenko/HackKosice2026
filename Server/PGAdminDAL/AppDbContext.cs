@@ -14,6 +14,7 @@ namespace PGAdminDAL
 
         // ================= USERS =================
         public DbSet<UserModel> Users { get; set; }
+        public DbSet<Know> Knows { get; set; }
         public DbSet<Sessions> Sessions { get; set; }
         public DbSet<UserLoginService> UserLogins { get; set; }
 
@@ -59,6 +60,15 @@ namespace PGAdminDAL
                 .HasMany(u => u.Sessions)
                 .WithOne(s => s.User)
                 .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Know>()
+                .HasKey(k => k.UserId);
+
+            modelBuilder.Entity<Know>()
+                .HasOne(k => k.User)
+                .WithMany() 
+                .HasForeignKey(k => k.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Налаштування ключа для UserLoginService

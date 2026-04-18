@@ -78,9 +78,9 @@ namespace Identification.Controllers
                         } while (!isUnique);
 
                         var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
-                        string safeIpAddress = string.IsNullOrEmpty(ipAddress) ? "Невідома IP" : ipAddress;
+                        string safeIpAddress = string.IsNullOrEmpty(ipAddress) ? "Unknown IP" : ipAddress;
 
-                        string deviceInfo = HttpContext.Request.Headers["User-Agent"].ToString() ?? "Невідомий пристрій";
+                        string deviceInfo = HttpContext.Request.Headers["User-Agent"].ToString() ?? "Unknown device";
 
                         var SessionsData = new Sessions
                         {

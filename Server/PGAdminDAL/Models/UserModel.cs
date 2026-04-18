@@ -23,9 +23,10 @@ public class UserModel
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public List<Guid> Family { get; set; } = new List<Guid>();
-    public List<Guid> Friends { get; set; } = new List<Guid>();
 
     public BankModel Bank { get; set; }
     public Guid BankId { get; set; }
     public ICollection<Jar> Jars { get; set; }
+
+    public ICollection<Know> Know { get; set; }
 }
