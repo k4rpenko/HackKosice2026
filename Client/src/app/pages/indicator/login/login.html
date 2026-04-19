@@ -29,17 +29,20 @@
         <form class="form">
             <div class="input-group">
                 <label>Email</label>
-                <input type="email" placeholder="Bob@email.com">
+                <input type="email" placeholder="Bob@email.com" [(ngModel)]="email" name="email">
             </div>
 
             <div class="input-group">
                 <label>Password</label>
-                <input type="password" placeholder="Min. 8 characters">
+                <input type="password" placeholder="Min. 8 characters" [(ngModel)]="password" name="password">
             </div>
 
             <div class="checkbox-container">
                 <label class="custom-checkbox">
-                    <input type="checkbox" id="terms">
+                    <input
+                        type="checkbox"
+                        [(ngModel)]="acceptTerms"
+                        name="acceptTerms">
                     <span class="checkmark"></span>
                     <span class="label-text">
                         I agree to the <span class="link">Terms of Service</span> and <span class="link">Privacy
@@ -47,7 +50,9 @@
                     </span>
                 </label>
             </div>
-
+            <div *ngIf="Error" class="error-message">
+                {{ Error }}
+            </div>
             <button type="button" (click)="onLogin($event)" class="submit-btn">Log In</button>
 
         </form>

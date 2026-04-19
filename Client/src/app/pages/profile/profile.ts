@@ -18,8 +18,8 @@ export class ProfileComponent {
     joined: 'April 2026'
   };
 
-  linkedBanks = [
-    { name: 'Revolut', icon: '💳', status: 'Connected' }
+  linkedBanks: { name: string; status: string; logoSrc?: string; icon?: string }[] = [
+    { name: 'Tatra banka', status: 'Connected', logoSrc: 'media/Tatra.png' },
   ];
 
   constructor(private router: Router) {}

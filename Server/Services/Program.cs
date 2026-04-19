@@ -1,8 +1,16 @@
 using Hash;
 using Hash.Interface;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Listen(IPAddress.Any, 8085, listenOptions =>
+    {
+        listenOptions.UseHttps("certificate.pfx", "3370");
+    });
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

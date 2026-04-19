@@ -14,4 +14,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Hash\Hash.csproj" />
+    <ProjectReference Include="..\Logger\Logger.csproj" />
+    <ProjectReference Include="..\PGAdminDAL\PGAdminDAL.csproj" />
+    <ProjectReference Include="..\SessionService\PostgresService.csproj" />
+  </ItemGroup>
+
 </Project>

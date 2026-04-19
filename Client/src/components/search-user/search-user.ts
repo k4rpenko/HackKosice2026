@@ -1,6 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+export interface SearchUserStatusPayload {
+  userId: number;
+  name: string;
+  email: string;
+  status: string;
+}
 
 @Component({
   selector: 'app-search-user',
@@ -10,6 +17,8 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./search-user.scss']
 })
 export class SearchUserComponent {
+  @Output() statusChanged = new EventEmitter<SearchUserStatusPayload>();
+
   searchEmail: string = '';
   foundUser: any = null;
   searchPerformed: boolean = false;
@@ -37,11 +46,18 @@ export class SearchUserComponent {
   updateStatus(newStatus: string) {
     if (this.foundUser) {
       this.foundUser.status = newStatus;
-      
+
       const index = this.mockUsers.findIndex(u => u.id === this.foundUser.id);
       if (index !== -1) {
         this.mockUsers[index].status = newStatus;
       }
+
+      this.statusChanged.emit({
+        userId: this.foundUser.id,
+        name: this.foundUser.name,
+        email: this.foundUser.email,
+        status: newStatus,
+      });
     }
   }
 }

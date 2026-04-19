@@ -9,7 +9,7 @@ using PostgresService;
 namespace Services.Controllers
 {
     [ApiController]
-    [Route("api/cards")]
+    [Route("api/[controller]")]
     public class profile : ControllerBase
     {
         private readonly IHASH256 _hash;
@@ -34,7 +34,7 @@ namespace Services.Controllers
             return Ok(user);
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<IActionResult> change_data(UserModel userModel)
         {
             try
@@ -57,7 +57,7 @@ namespace Services.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("update_password")]
         public async Task<IActionResult> change_password(string password)
         {
             try

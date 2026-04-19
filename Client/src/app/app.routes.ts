@@ -9,6 +9,8 @@ import { CardDetailsComponent } from './pages/card-details/card-details';
 import { FriendsComponent } from './pages/friends/friends';
 import { TransferComponent } from './pages/transfer/transfer';
 import { ProfileComponent } from './pages/profile/profile';
+import { JarPaymentComponent } from './pages/jar-payment/jar-payment';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,9 +19,10 @@ export const routes: Routes = [
   { path: 'select-bank', component: SelectBankComponent },
   { path: 'home', component: DashboardComponent },
   { path: 'cards', component: CardsComponent },
-  { path: 'card-details/:id', component: CardDetailsComponent },
-  { path: 'friends', component: FriendsComponent }, 
+  { path: 'card-details/:id', component: CardDetailsComponent},
+  { path: 'friends', component: FriendsComponent },
   { path: 'transfer', component: TransferComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'jar/payment/:jarId', component: JarPaymentComponent },
   { path: '**', redirectTo: '' } 
 ];
