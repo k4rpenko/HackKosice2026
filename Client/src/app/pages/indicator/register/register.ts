@@ -26,6 +26,7 @@ export class RegisterComponent {
   constructor(private router: Router, private cookieService: CookieService) {}
 
   onRegister(event: Event) {
+    this.router.navigate(['/select-bank']);
     event.preventDefault();
     console.log(this.acceptTerms);
     
@@ -69,27 +70,27 @@ export class RegisterComponent {
     this.Error = '';
 
 
-    this.Rest.PostRegister(this.email, this.password, this.firstName, this.lastName).subscribe({
-      next: (response) => {
-        const token = response.cookie;
-        this.cookieService.set('_ASA', token, undefined, '/', 'localhost', true, 'Strict');
-        this.router.navigate(['home']);
-      },
-      error: (error) => {
-        if (error.status === 429) {
-          this.Error = 'Too many requests. Please try again later.';
-        } 
-        else if(error.status === 400){
-          this.Error = 'This email address is already taken, please try another one.';
-        }
-        else {
-          const errorMessage = error.error?.message || error.message;
-          this.Error = errorMessage;
-        }
-      }
-    });
+    // this.Rest.PostRegister(this.email, this.password, this.firstName, this.lastName).subscribe({
+    //   next: (response) => {
+    //     const token = response.cookie;
+    //     this.cookieService.set('_ASA', token, undefined, '/', 'localhost', true, 'Strict');
+    //     this.router.navigate(['home']);
+    //   },
+    //   error: (error) => {
+    //     if (error.status === 429) {
+    //       this.Error = 'Too many requests. Please try again later.';
+    //     } 
+    //     else if(error.status === 400){
+    //       this.Error = 'This email address is already taken, please try another one.';
+    //     }
+    //     else {
+    //       const errorMessage = error.error?.message || error.message;
+    //       this.Error = errorMessage;
+    //     }
+    //   }
+    // });
 
-    //this.router.navigate(['/select-bank']);
+    this.router.navigate(['/select-bank']);
   }
 
   isValidEmail(email: string): boolean {

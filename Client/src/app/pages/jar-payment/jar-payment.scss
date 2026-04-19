@@ -1,0 +1,335 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: radial-gradient(ellipse 100% 60% at 50% -10%, rgba(46, 204, 113, 0.14) 0%, transparent 50%),
+    radial-gradient(circle at 100% 30%, rgba(162, 155, 254, 0.08) 0%, transparent 42%), #050505;
+  color: #fff;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.jar-pay {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 16px 18px 32px;
+  box-sizing: border-box;
+
+  &--empty {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  &__back {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  &__brand {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  &__spacer {
+    width: 40px;
+  }
+
+  &__hero {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  /** Кільце прогресу в дусі Monobank — наші кольори */
+  &__ring {
+    --pct: 0;
+    width: 132px;
+    height: 132px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    padding: 5px;
+    background: conic-gradient(
+      from -90deg,
+      #2ecc71 calc(var(--pct) * 3.6deg),
+      rgba(255, 255, 255, 0.1) 0
+    );
+    box-shadow: 0 0 40px rgba(46, 204, 113, 0.15);
+  }
+
+  &__ring-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(165deg, #121a16 0%, #0a0d0c 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  &__ring-pct {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+
+  &__ring-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 2px;
+  }
+
+  &__eyebrow {
+    margin: 0 0 6px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(162, 155, 254, 0.9);
+  }
+
+  &__title {
+    margin: 0 0 10px;
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #f5f5f5;
+  }
+
+  &__target {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.45);
+
+    strong {
+      color: #2ecc71;
+      font-weight: 700;
+    }
+  }
+
+  &__progress-bar {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    margin-bottom: 22px;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #27ae60, #2ecc71);
+    box-shadow: 0 0 16px rgba(46, 204, 113, 0.45);
+    transition: width 0.35s ease;
+  }
+
+  &__panel {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 18px 16px 8px;
+    margin-bottom: 22px;
+  }
+
+  &__panel-title {
+    margin: 0 0 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &__panel-hint {
+    margin: 0 0 16px;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.38);
+  }
+
+  &__members {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__member {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    padding: 14px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+    &:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    &--done {
+      .jar-pay__avatar {
+        opacity: 0.85;
+      }
+    }
+  }
+
+  &__avatar {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #2ecc71 0%, #1e8449 100%);
+    color: #000;
+    font-size: 0.8rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__member-main {
+    flex: 1;
+    min-width: 140px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__member-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #eee;
+  }
+
+  &__member-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  &__member-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &__member-amount {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #2ecc71;
+    letter-spacing: -0.02em;
+  }
+
+  &__member-action {
+    flex-shrink: 0;
+    min-width: 104px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  &__pay-btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 12px;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 800;
+    cursor: pointer;
+    color: #000;
+    background: linear-gradient(180deg, #3dd68c 0%, #2ecc71 100%);
+    box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 26px rgba(46, 204, 113, 0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &__paid-badge {
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #2ecc71;
+    background: rgba(46, 204, 113, 0.12);
+    border: 1px solid rgba(46, 204, 113, 0.35);
+  }
+
+  &__footer-note {
+    margin: 0;
+    text-align: center;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: rgba(46, 204, 113, 0.95);
+  }
+
+  &__missing {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  &__missing-title {
+    margin: 0 0 8px;
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
+
+  &__missing-text {
+    margin: 0 0 20px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.45);
+    max-width: 280px;
+  }
+
+  &__link-home {
+    color: #2ecc71;
+    font-weight: 700;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

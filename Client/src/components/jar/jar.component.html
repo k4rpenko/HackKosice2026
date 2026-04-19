@@ -6,12 +6,22 @@
       <article class="jar-card" *ngFor="let j of jars">
         <div class="jar-card__head">
           <span class="jar-card__title">{{ j.title }}</span>
-          <button type="button" class="jar-card__remove" (click)="deleteJar(j.id, $event)" aria-label="Delete">×</button>
+          <div class="jar-card__actions">
+            <button
+              type="button"
+              class="jar-card__copy"
+              (click)="copyJarLink(j, $event)"
+              [attr.aria-label]="copiedJarId === j.id ? 'Link copied' : 'Copy payment link'"
+            >
+              {{ copiedJarId === j.id ? 'Copied' : 'Copy link' }}
+            </button>
+            <button type="button" class="jar-card__remove" (click)="deleteJar(j.id, $event)" aria-label="Delete">×</button>
+          </div>
         </div>
         <div class="jar-card__amount">€{{ j.totalAmount | number: '1.2-2' }}</div>
         <ul class="jar-card__members">
-          <li *ngFor="let m of j.members">
-            <span>{{ m.name }}</span>
+          <li *ngFor="let m of j.members" [class.jar-card__member--paid]="m.paid">
+            <span>{{ m.name }}<span class="jar-card__paid-tag" *ngIf="m.paid">Paid</span></span>
             <span class="jar-card__pay">€{{ m.payAmount | number: '1.2-2' }}</span>
           </li>
         </ul>
@@ -81,15 +91,27 @@
 
         <div class="jar-amounts" *ngIf="jarParticipants.length > 0">
           <h3 class="jar-amounts__title">Суми до сплати</h3>
+          <p class="jar-amounts__budget" *ngIf="jarTotal != null && jarTotal > 0">
+            Jar total: €{{ jarTotal | number: '1.2-2' }} · assigned: €{{ explicitShareTotal | number: '1.2-2' }} ·
+            <span [class.jar-amounts__warn]="remainingForAutoSplit < -0.001">
+              left for auto-split: €{{ remainingForAutoSplit | number: '1.2-2' }}
+            </span>
+          </p>
           <div class="jar-amount-row" *ngFor="let row of jarParticipants">
             <span class="jar-amount-row__name">{{ row.name }}</span>
-            <input
-              class="jar-input jar-input--sm"
-              type="number"
-              min="0"
-              step="0.01"
-              placeholder="Авто"
-            />
+            <div class="jar-amount-row__field">
+              <input
+                class="jar-input jar-input--sm"
+                type="number"
+                min="0"
+                [attr.max]="maxAmountForPerson(row.personId)"
+                step="0.01"
+                [value]="participantAmountInput(row.personId)"
+                (input)="onParticipantAmountInput($event, row.personId)"
+                placeholder="Auto"
+              />
+              <span class="jar-amount-row__cap" *ngIf="jarTotal != null">max €{{ maxAmountForPerson(row.personId) | number: '1.2-2' }}</span>
+            </div>
           </div>
         </div>
         <p class="jar-personal-note" *ngIf="jarParticipants.length === 0">
@@ -108,7 +130,13 @@
         >
           Next
         </button>
-        <button type="button" class="jar-btn jar-btn--primary" *ngIf="jarStep === 3" (click)="createJar()">
+        <button
+          type="button"
+          class="jar-btn jar-btn--primary"
+          *ngIf="jarStep === 3"
+          (click)="createJar()"
+          [disabled]="!canCreateJar()"
+        >
           Create Jar
         </button>
       </footer>

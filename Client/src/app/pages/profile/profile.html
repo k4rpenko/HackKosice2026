@@ -37,7 +37,10 @@
             <p class="profile-section__hint">Banks you use for transfers and balances</p>
             <ul class="bank-list">
               <li class="bank-item" *ngFor="let bank of linkedBanks">
-                <div class="bank-item__icon" aria-hidden="true">{{ bank.icon }}</div>
+                <div class="bank-item__icon" [class.bank-item__icon--logo]="bank.logoSrc">
+                  <img *ngIf="bank.logoSrc" [src]="bank.logoSrc" alt="" />
+                  <span *ngIf="!bank.logoSrc && bank.icon" aria-hidden="true">{{ bank.icon }}</span>
+                </div>
                 <div class="bank-item__body">
                   <span class="bank-item__name">{{ bank.name }}</span>
                   <span class="bank-item__status">{{ bank.status }}</span>

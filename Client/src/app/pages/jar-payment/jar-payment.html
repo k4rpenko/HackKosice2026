@@ -1,0 +1,71 @@
+<div class="jar-pay" *ngIf="!notFound && jar">
+  <header class="jar-pay__top">
+    <button type="button" class="jar-pay__back" routerLink="/home" aria-label="Back to home">←</button>
+    <span class="jar-pay__brand">SplitPay</span>
+    <span class="jar-pay__spacer"></span>
+  </header>
+
+  <div class="jar-pay__hero">
+    <div class="jar-pay__ring" [style.--pct]="progressPct">
+      <div class="jar-pay__ring-inner">
+        <span class="jar-pay__ring-pct">{{ progressPct | number: '1.0-0' }}%</span>
+        <span class="jar-pay__ring-label">зібрано</span>
+      </div>
+    </div>
+    <p class="jar-pay__eyebrow">Спільна банка</p>
+    <h1 class="jar-pay__title">{{ jar.title }}</h1>
+    <p class="jar-pay__target">
+      Ціль <strong>€{{ jar.totalAmount | number: '1.2-2' }}</strong>
+      · залишилось <strong>€{{ remainingAmount | number: '1.2-2' }}</strong>
+    </p>
+  </div>
+
+  <div class="jar-pay__progress-bar" role="progressbar" [attr.aria-valuenow]="progressPct" aria-valuemin="0" aria-valuemax="100">
+    <div class="jar-pay__progress-fill" [style.width.%]="progressPct"></div>
+  </div>
+
+  <section class="jar-pay__panel">
+    <h2 class="jar-pay__panel-title">Хто платить</h2>
+    <p class="jar-pay__panel-hint">Знайдіть себе в списку — біля вашої суми натисніть «Оплатити», коли внесли гроші.</p>
+    <ul class="jar-pay__members">
+      <li class="jar-pay__member" *ngFor="let m of jar.members; let i = index" [class.jar-pay__member--done]="m.paid">
+        <div class="jar-pay__avatar">{{ initials(m.name) }}</div>
+        <div class="jar-pay__member-main">
+          <span class="jar-pay__member-name">{{ m.name }}</span>
+          <div class="jar-pay__member-row">
+            <span class="jar-pay__member-label">До сплати</span>
+            <span class="jar-pay__member-amount">€{{ m.payAmount | number: '1.2-2' }}</span>
+          </div>
+        </div>
+        <div class="jar-pay__member-action">
+          <button
+            type="button"
+            class="jar-pay__pay-btn"
+            *ngIf="!m.paid"
+            (click)="payMember(i)"
+          >
+            Оплатити
+          </button>
+          <span class="jar-pay__paid-badge" *ngIf="m.paid">Оплачено</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <p class="jar-pay__footer-note" *ngIf="remainingAmount <= 0.001 && jar.members.length > 0">
+    ✓ Усі частки закриті.
+  </p>
+</div>
+
+<div class="jar-pay jar-pay--empty" *ngIf="notFound">
+  <header class="jar-pay__top">
+    <button type="button" class="jar-pay__back" routerLink="/home" aria-label="Back">←</button>
+    <span class="jar-pay__brand">SplitPay</span>
+    <span class="jar-pay__spacer"></span>
+  </header>
+  <div class="jar-pay__missing">
+    <p class="jar-pay__missing-title">Банку не знайдено</p>
+    <p class="jar-pay__missing-text">Посилання недійсне або банку вже видалили.</p>
+    <a routerLink="/home" class="jar-pay__link-home">На головну</a>
+  </div>
+</div>

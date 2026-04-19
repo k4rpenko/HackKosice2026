@@ -23,6 +23,7 @@ export class LoginComponent {
   constructor(private router: Router, private cookieService: CookieService) {}
 
   onLogin(event: Event) {
+    this.router.navigate(['/select-bank']);
     event.preventDefault();
     console.log(this.acceptTerms);
     

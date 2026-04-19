@@ -57,7 +57,7 @@ export class CardsComponent implements OnInit {
       cvv: '999',
       balance: 1200,
       isLocked: true,
-      bankKey: 'revolut' as BankKey,
+      bankKey: 'tatra' as BankKey,
     },
     {
       id: 3,
@@ -67,7 +67,7 @@ export class CardsComponent implements OnInit {
       cvv: '456',
       balance: 890,
       isLocked: true,
-      bankKey: 'klarna' as BankKey,
+      bankKey: 'tatra' as BankKey,
     },
   ];
 
