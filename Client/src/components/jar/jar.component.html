@@ -90,7 +90,7 @@
         </div>
 
         <div class="jar-amounts" *ngIf="jarParticipants.length > 0">
-          <h3 class="jar-amounts__title">Суми до сплати</h3>
+          <h3 class="jar-amounts__title">Amounts due</h3>
           <p class="jar-amounts__budget" *ngIf="jarTotal != null && jarTotal > 0">
             Jar total: €{{ jarTotal | number: '1.2-2' }} · assigned: €{{ explicitShareTotal | number: '1.2-2' }} ·
             <span [class.jar-amounts__warn]="remainingForAutoSplit < -0.001">
