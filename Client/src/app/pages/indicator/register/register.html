@@ -30,32 +30,36 @@
             <div class="form-row">
                 <div class="input-group">
                     <label>First Name</label>
-                    <input type="text" placeholder="Bob">
+                    <input type="text" placeholder="Bob" [(ngModel)]="firstName" name="firstName">
                 </div>
                 <div class="input-group">
                     <label>Last Name</label>
-                    <input type="text" placeholder="Bobbyson">
+                    <input type="text" placeholder="Bobbyson" [(ngModel)]="lastName" name="lastName">
                 </div>
             </div>
 
             <div class="input-group">
                 <label>Email</label>
-                <input type="email" placeholder="Bob@email.com">
+                <input type="email" placeholder="Bob@email.com" [(ngModel)]="email" name="email">
             </div>
 
             <div class="input-group">
                 <label>Password</label>
-                <input type="password" placeholder="Min. 8 characters">
+                
+                <input type="password" placeholder="Min. 8 characters" [(ngModel)]="password" name="password">
             </div>
 
             <div class="input-group">
                 <label>password confirmation</label>
-                <input type="password" placeholder="Min. 8 characters">
+                <input type="password" placeholder="Min. 8 characters" [(ngModel)]="password2" name="password2">
             </div>
 
             <div class="checkbox-container">
                 <label class="custom-checkbox">
-                    <input type="checkbox" id="terms">
+                    <input
+                        type="checkbox"
+                        [(ngModel)]="acceptTerms"
+                        name="acceptTerms">
                     <span class="checkmark"></span>
                     <span class="label-text">
                         I agree to the <span class="link">Terms of Service</span> and <span class="link">Privacy
@@ -64,6 +68,9 @@
                 </label>
             </div>
 
+            <div *ngIf="Error" class="error-message">
+            {{ Error }}
+            </div>
             <button type="button" (click)="onRegister($event)" class="submit-btn">Register</button>
 
         </form>
