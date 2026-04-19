@@ -43,9 +43,10 @@ namespace Identification.Controllers
                         Email = _user.Email,
                         KeyHash = KeyG,
                         Password = _hash.Encrypt(_user.Password, KeyG),
-                        FirstName = "User",
-                        LastName = "",
+                        FirstName = _user.FirstName,
+                        LastName = _user.LastName,
                         Avatar = "https://54hmmo3zqtgtsusj.public.blob.vercel-storage.com/avatar/Logo-yEeh50niFEmvdLeI2KrIUGzMc6VuWd-a48mfVnSsnjXMEaIOnYOTWIBFOJiB2.jpg",
+                        Role = "User",
                     };  
 
                     _context.Users.Add(newUser);
@@ -53,7 +54,7 @@ namespace Identification.Controllers
 
                     await _context.SaveChangesAsync();
                    
-                    var userId = newUser.Id.ToString();
+                    var userId = newUser.Id;
                     var record = await _context.Users.FindAsync(userId);
 
                     if (record != null)
@@ -67,7 +68,7 @@ namespace Identification.Controllers
                         do
                         {
                             key = _hasher.GenerateKey();
-                            token = _hasher.GenerateHash(userId, key);
+                            token = _hasher.GenerateHash(userId.ToString(), key);
 
                             var find = await _context.Users
                                 .Where(u => u.Sessions.Any(s => s.KeyHash == token))
@@ -92,7 +93,7 @@ namespace Identification.Controllers
                             LoginTime = DateTime.UtcNow.AddDays(14)
                         };
 
-                        record.Sessions.Add(SessionsData);
+                        _context.Sessions.Add(SessionsData);
 
 
                         await _context.SaveChangesAsync();
@@ -119,7 +120,7 @@ namespace Identification.Controllers
             if (string.IsNullOrWhiteSpace(_user.Email) || string.IsNullOrWhiteSpace(_user.Password) || !Regex.IsMatch(_user.Email, emailPattern)) { return BadRequest(new { message = "Email and Password cannot be null or empty" }); }
             if (_user.Password.Contains(" ")) { return BadRequest(new { message = "Password cannot contain spaces" }); }
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == _user.Email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == _user.Email.ToLower());
             if (user == null) { return NotFound(new { message = "User not found." }); }
 
             var encryptedPassword = _hash.Encrypt(_user.Password, user.KeyHash);
@@ -157,9 +158,10 @@ namespace Identification.Controllers
             };
 
 
-            user.Sessions.Add(SessionsData);
+            _context.Sessions.Add(SessionsData);
 
             await _context.SaveChangesAsync();
+
             return Ok(new { cookie = token });
         }
     }

@@ -16,7 +16,7 @@ public class UserModel
     public string? LastName { get; set; }
     public string? Avatar { get; set; }
 
-    public List<Sessions> Sessions { get; set; }
+    public ICollection<Sessions> Sessions { get; set; } = new List<Sessions>();
 
     public DateTime? DateOfBirth { get; set; }
     public DateTime? LastLogin { get; set; }

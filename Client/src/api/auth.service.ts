@@ -8,7 +8,7 @@ export class AuthService {
   http = inject(HttpClient)
   constructor() { }
 
-  PostLogin(email: String, password: String) {
+  public PostLogin(email: String, password: String) {
     const json = {
       "email": email,
       "password": password
@@ -21,10 +21,12 @@ export class AuthService {
   }
 
   
-  PostRegister(email: String, password: String) {
+  public PostRegister(email: String, password: String, firstName: String, lastName: String) {
     const json = {
       "email": email,
-      "password": password
+      "password": password,
+      "firstName": firstName,
+      "lastName": lastName
     };
 
     return this.http.post<{ cookie: string }>(`api/Auth/registration`, json, {

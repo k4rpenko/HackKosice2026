@@ -7,6 +7,8 @@ using PostgresService;
 
 namespace Services.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class users : ControllerBase
     {
         private readonly IPostgresService postgresService;
@@ -54,13 +56,13 @@ namespace Services.Controllers
         }
 
         [HttpGet("{id:guid}/friends")]
-        public async Task<IActionResult> GetFriends(Guid id)
+        public async Task<IActionResult> GetFriends(string id)
         {
             var user = await postgresService.GetUserDataAsync(Request);
             if (user == null) return Unauthorized();
 
             var know = await context.Users
-                .Where(u => u.Role == "friend" && u.Id == id)
+                .Where(u => u.Role == "friend" && u.Id.ToString() == id)
                 .Select(u => new
                 {
                     u.Id,
@@ -76,13 +78,13 @@ namespace Services.Controllers
         }
 
         [HttpGet("{id:guid}/family")]
-        public async Task<IActionResult> GetFamily(Guid id)
+        public async Task<IActionResult> GetFamily(string id)
         {
             var user = await postgresService.GetUserDataAsync(Request);
             if (user == null) return Unauthorized();
 
             var know = await context.Users
-                .Where(u => u.Role == "family" && u.Id == id)
+                .Where(u => u.Role == "family" && u.Id.ToString() == id)
                 .Select(u => new
                 {
                     u.Id,
