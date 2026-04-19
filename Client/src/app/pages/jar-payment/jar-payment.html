@@ -44,16 +44,16 @@
             *ngIf="!m.paid"
             (click)="payMember(i)"
           >
-            Оплатити
+            Pay
           </button>
-          <span class="jar-pay__paid-badge" *ngIf="m.paid">Оплачено</span>
+          <span class="jar-pay__paid-badge" *ngIf="m.paid">Paid</span>
         </div>
       </li>
     </ul>
   </section>
 
   <p class="jar-pay__footer-note" *ngIf="remainingAmount <= 0.001 && jar.members.length > 0">
-    ✓ Усі частки закриті.
+    ✓ All shares are closed.
   </p>
 </div>
 
