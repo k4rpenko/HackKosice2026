@@ -70,6 +70,7 @@
             class="jar-person-tile"
             *ngFor="let p of circlePeople"
             [class.jar-person-tile--selected]="isPersonInJar(p.id)"
+            (click)="togglePersonInJar(p)"
           >
             <div class="jar-person-tile__avatar">{{ p.initials }}</div>
             <span class="jar-person-tile__name">{{ p.name }}</span>
@@ -107,7 +108,7 @@
         >
           Next
         </button>
-        <button type="button" class="jar-btn jar-btn--primary" *ngIf="jarStep === 3" >
+        <button type="button" class="jar-btn jar-btn--primary" *ngIf="jarStep === 3" (click)="createJar()">
           Create Jar
         </button>
       </footer>

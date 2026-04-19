@@ -2,8 +2,8 @@ import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { Header } from '../../../components/header/header.component';
-
-
+import { JarComponent, JarCirclePerson } from '../../../components/jar/jar.component';
+import { SearchUserComponent, SearchUserStatusPayload } from '../../../components/search-user/search-user';
 
 interface Person {
   id: number;
@@ -13,6 +13,7 @@ interface Person {
   status?: string;
   category: 'Family' | 'Friends';
   isIndebted?: boolean;
+  email?: string;
 }
 
 interface SharedTransaction {
@@ -33,7 +34,7 @@ interface SharedAccount {
 @Component({
   selector: 'app-friends',
   standalone: true,
-  imports: [CommonModule,RouterModule,Header],
+  imports: [CommonModule, RouterModule, Header, JarComponent, SearchUserComponent],
   templateUrl: './friends.html',
   styleUrls: ['./friends.scss'],
 })
@@ -41,6 +42,7 @@ export class FriendsComponent implements OnInit {
   showCreateModal   = signal(false);
   showDeleteConfirm = signal<string | null>(null);
   showAddMemberModal = signal(false);
+  showAddPeopleModal = signal(false);
 
   createForm = {
     accountName:    signal(''),
@@ -83,7 +85,59 @@ export class FriendsComponent implements OnInit {
   familyMembers = computed(() => this.people().filter(p => p.category === 'Family'));
   friends       = computed(() => this.people().filter(p => p.category === 'Friends'));
 
+  jarCirclePeople = computed((): JarCirclePerson[] =>
+    this.people().map((p) => ({
+      id: p.id,
+      name: p.name,
+      initials: p.initials,
+      role: p.role,
+    }))
+  );
+
   ngOnInit(): void {}
+
+  openAddPeopleModal(): void {
+    this.showAddPeopleModal.set(true);
+  }
+
+  closeAddPeopleModal(): void {
+    this.showAddPeopleModal.set(false);
+  }
+
+  onSearchUserStatus(ev: SearchUserStatusPayload): void {
+    const category: 'Family' | 'Friends' | null =
+      ev.status === 'Family' ? 'Family' : ev.status === 'Friend' ? 'Friends' : null;
+    const parts = ev.name.trim().split(/\s+/);
+    const initials =
+      parts.length >= 2
+        ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+        : ev.name.slice(0, 2).toUpperCase();
+
+    this.people.update((list) => {
+      if (ev.status === 'none') {
+        return list.filter((p) => p.email !== ev.email);
+      }
+      if (!category) {
+        return list;
+      }
+      const existing = list.find((p) => p.email === ev.email);
+      if (existing) {
+        return list.map((p) => (p.email === ev.email ? { ...p, category } : p));
+      }
+      const nextId = (list.length ? Math.max(...list.map((x) => x.id)) : 0) + 1;
+      return [
+        ...list,
+        {
+          id: nextId,
+          name: ev.name,
+          initials,
+          role: category === 'Family' ? 'Family member' : 'Friend',
+          category,
+          email: ev.email,
+        },
+      ];
+    });
+  }
 
   openCreateModal(): void {
     this.createForm.accountName.set('');

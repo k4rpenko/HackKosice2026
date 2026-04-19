@@ -479,6 +479,14 @@ main{
     max-width: 340px;
   }
 
+  &--add-people {
+    max-width: 640px;
+    max-height: min(90vh, 820px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
   &__header {
     display: flex;
     align-items: center;
@@ -491,6 +499,13 @@ main{
       margin: 0;
     }
   }
+}
+
+.add-people-modal__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-close {

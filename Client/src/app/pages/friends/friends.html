@@ -5,8 +5,8 @@
   <header class="page-header">
     <h1>Friends &amp; <span class="highlight">Family</span></h1>
     <div class="page-header__actions">
-      <button type="button" class="add-people-btn">Add people</button>
-      <button type="button" class="jar-toolbar-btn">Jar</button>
+      <button type="button" class="add-people-btn" (click)="openAddPeopleModal()">Add people</button>
+      <button type="button" class="jar-toolbar-btn" (click)="friendsJar.openJarModal()">Jar</button>
       <button type="button" class="add-friend-btn" (click)="openCreateModal()">
         + Create Shared Account
       </button>
@@ -135,8 +135,25 @@
     </div>
   </section>
 
+  <app-jar #friendsJar [circlePeople]="jarCirclePeople()" />
+
 </div>
 
+<div class="modal-backdrop" *ngIf="showAddPeopleModal()" (click)="closeAddPeopleModal()">
+  <div class="modal-card modal-card--add-people" (click)="$event.stopPropagation()">
+    <div class="modal-card__header">
+      <h2>Add people</h2>
+      <button type="button" class="modal-close" (click)="closeAddPeopleModal()" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="add-people-modal__body">
+      <app-search-user (statusChanged)="onSearchUserStatus($event)" />
+    </div>
+  </div>
+</div>
 
 <div class="modal-backdrop" *ngIf="showCreateModal()" (click)="showCreateModal.set(false)">
   <div class="modal-card" (click)="$event.stopPropagation()">

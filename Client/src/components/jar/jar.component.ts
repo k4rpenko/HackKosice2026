@@ -71,6 +71,50 @@ export class JarComponent implements OnInit {
     return this.jarParticipants.some((p) => p.personId === personId);
   }
 
+  togglePersonInJar(p: JarCirclePerson): void {
+    const idx = this.jarParticipants.findIndex((x) => x.personId === p.id);
+    if (idx >= 0) {
+      this.jarParticipants = this.jarParticipants.filter((x) => x.personId !== p.id);
+    } else {
+      this.jarParticipants = [
+        ...this.jarParticipants,
+        { personId: p.id, name: p.name, initials: p.initials, amount: null },
+      ];
+    }
+  }
+
+  createJar(): void {
+    const title = this.jarTitle.trim();
+    const total = this.jarTotal;
+    if (!title || total === null || total === undefined || !Number.isFinite(total) || total <= 0) {
+      return;
+    }
+
+    let members: { name: string; payAmount: number }[];
+    if (this.jarParticipants.length === 0) {
+      members = [{ name: 'Just Me', payAmount: Math.round(total * 100) / 100 }];
+    } else {
+      const n = this.jarParticipants.length;
+      const each = Math.floor((total / n) * 100) / 100;
+      const remainder = Math.round((total - each * n) * 100) / 100;
+      members = this.jarParticipants.map((p, i) => ({
+        name: p.name,
+        payAmount: i === 0 ? Math.round((each + remainder) * 100) / 100 : each,
+      }));
+    }
+
+    const jar: SavedJar = {
+      id: 'jar-' + Date.now(),
+      title,
+      totalAmount: Math.round(total * 100) / 100,
+      members,
+      createdAt: new Date().toISOString(),
+    };
+    this.jars = [...this.jars, jar];
+    localStorage.setItem(this.jarsStorageKey, JSON.stringify(this.jars));
+    this.closeJarModal();
+  }
+
   nextJarStep(): void {
     if (this.jarStep === 1) {
       if (!this.jarTitle.trim()) return;
